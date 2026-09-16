@@ -1,28 +1,24 @@
-# CPSC 490 — Group 〈N〉 〈Group Name〉
-
-> **Copy this file to `README.md` in YOUR repository and fill it in.**
-> (In this example repository the root `README.md` is the setup guide, so the
-> team README model lives here.)
+# CPSC 490 — Group 02 Linux Larpers
 
 **Project title:** 〈Title〉
 **Sponsor:** 〈RTX-3 / EL-1 / SNX-2 / independent〉
-**Section:** 〈01 (Tue) | 05 (Thu)〉
+**Section:** 01 (Tues)
 
 ## Team
 
 | Name | GitHub | Role | Leader |
 |---|---|---|---|
-| 〈Last, First〉 | @〈username〉 | 〈e.g. backend, docs lead〉 | ✅ |
+| Thomas, Eli | @eliThomass | 〈e.g. backend, docs lead〉 | ✅ |
 | 〈…〉 | @〈…〉 | 〈…〉 | |
 | 〈…〉 | @〈…〉 | 〈…〉 | |
 | 〈…〉 | @〈…〉 | 〈…〉 | |
 
-**Contact person:** 〈Name〉 — 〈email〉
+**Contact person:** Eli Thomas — 23thomasec@csu.fullerton.edu 
 
 ## Links
 
 - **Proposal:** [`proposal/proposal.md`](proposal/proposal.md)
-- **Project board:** 〈paste your Projects board URL〉
+- **Project board:** https://github.com/users/eliThomass/projects/2 
 - **Specifications:** [`docs/specs/`](docs/specs/) · **Designs:** [`docs/design/`](docs/design/)
 - **Prototype:** [`prototype/`](prototype/) — run instructions in its README
 - **Sprint reviews:** [`docs/sprint-reviews/`](docs/sprint-reviews/)
