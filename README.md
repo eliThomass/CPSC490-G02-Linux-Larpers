@@ -9,7 +9,7 @@
 | Name | GitHub | Role | Leader |
 |---|---|---|---|
 | Thomas, Eli | @eliThomass | 〈e.g. backend, docs lead〉 | ✅ |
-| 〈…〉 | @〈…〉 | 〈…〉 | |
+| Perry, Ryan | @Perryboi8  | 〈…〉                       | |
 | 〈…〉 | @〈…〉 | 〈…〉 | |
 | 〈…〉 | @〈…〉 | 〈…〉 | |
 
