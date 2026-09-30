@@ -1,7 +1,7 @@
 # CPSC 490 — Group 02 Linux Larpers
 
-**Project title:** 〈Title〉
-**Sponsor:** 〈RTX-3 / EL-1 / SNX-2 / independent〉
+**Project title:** Distributed Signal Capture for Multi-Node Analysis  
+**Sponsor:** RTX-4   
 **Section:** 01 (Tues)
 
 ## Team
@@ -18,13 +18,14 @@
 ## Links
 
 - **Proposal:** [`proposal/proposal.md`](proposal/proposal.md)
-- **Project board:** https://github.com/users/eliThomass/projects/2 
+- **Project board:** https://github.com/users/eliThomass/projects/4 
 - **Specifications:** [`docs/specs/`](docs/specs/) · **Designs:** [`docs/design/`](docs/design/)
 - **Prototype:** [`prototype/`](prototype/) — run instructions in its README
 - **Sprint reviews:** [`docs/sprint-reviews/`](docs/sprint-reviews/)
 
 ## Project summary
 
+Privacy is something that is becoming less and less common in the modern age of technology. Our project proposes a system that can detect multiple nodes using distributed signal capture for multi-node analysis. The design will focus on a specific subset of IoT devices, such as Meta glasses, Ring cameras, body cameras, and other spy cameras. Using the signals emitted by these devices, the system will be able to enter an area and capture device presense in real-time. This data will be uploaded to both a frontend for viewing and a backend for signal metadata analysis.  
 〈3–5 sentences a stranger can understand: the problem, your approach, what
 will exist at the end of the semester.〉
 
