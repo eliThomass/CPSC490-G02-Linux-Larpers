@@ -3,8 +3,8 @@
 **Department of Computer Science**
 **CPSC 490 Undergraduate Seminar in Computer Science — Proposal for Capstone Project**
 
-**Group 02 — Linux Larpers** · Sponsor: RTX-4
-Authors: Thomas, Eli (eliThomass), Perry, Ryan (Perryboi8), Cerasuolo, Jasmine (jcerasuolo5), Huynh, Chris (chroyy), Soo, Jonathan (soo-nexus)
+**Group 02 — Linux Larpers** · Sponsor: RTX-4  
+Authors: Thomas, Eli (eliThomass), Perry, Ryan (Perryboi8), Cerasuolo, Jasmine (jcerasuolo5), Huynh, Chris (chroyy), Soo, Jonathan (soo-nexus)  
 Date: 2026-10-04
 
 > **This file is the proposal document, not a README.** Its section numbers,
