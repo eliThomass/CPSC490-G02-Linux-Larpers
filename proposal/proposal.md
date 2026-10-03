@@ -1,11 +1,11 @@
-# Project Proposal — 〈Project Title〉
+# Project Proposal — Distributed Signal Capture for Multi-Node Analysis
 
 **Department of Computer Science**
 **CPSC 490 Undergraduate Seminar in Computer Science — Proposal for Capstone Project**
 
-**Group 〈N〉 — 〈Group Name〉** · Sponsor: 〈RTX-3 / EL-1 / SNX-n / independent〉
-Authors: 〈Last, First (GitHub username)〉, 〈…〉
-Date: 〈YYYY-MM-DD〉
+**Group 02 — Linux Larpers** · Sponsor: RTX-4  
+Authors: Thomas, Eli (eliThomass), Perry, Ryan (Perryboi8), Cerasuolo, Jasmine (jcerasuolo5), Huynh, Chris (chroyy), Soo, Jonathan (soo-nexus)  
+Date: 2026-10-04
 
 > **This file is the proposal document, not a README.** Its section numbers,
 > titles, and guidance are copied from the course Word template, so it
@@ -60,16 +60,14 @@ Date: 〈YYYY-MM-DD〉
 
 ## 1. Introduction
 
-> Describe the necessary background on the project field to help the reader
-> understand the field. Assume the reader has B.S. degree in computer science
-> but not necessary knowledgeable in the selected area. You may also briefly
-> describe motivation of the project if any.
->
-> Specify the problem identified and to be solved in this project, the
-> importance or usefulness of the problem solving or project. Further
-> describes what makes your proposal different from existing ones.
+  The Internet of Things (IoT) connects physical devices to computing systems through which they can exchange data. In this project, the devices of interest include network-connected cameras and wearable recording devices, such as Ring cameras, Meta glasses, and body cameras. Being able to understand the presence of such devices involves both signal capture and data analysis. This will include observing signals emitted by devices within range and interpreting those observations to be able to develop a useful picture of the surrounding environment. This projects main goal is **privacy awareness**, helping individuals map which devices are present and what their observable activity may reveal.
 
-〈Your introduction.〉
+  Our project, *Distributed Signal Capture for Multi-Node Analysis*, aims to map device presence in real time by capturing signals from devices within range as a user enters an area. Our software is intended to operate on either a labtop or a smaller computing platform, such as Raspberry Pi. Backend services will collect signal metadata from each node for analysis, including device fingerprinting to distinguish devices based on their observable traits. A frontend dashboard will present detected devices amd their approximate locations, giving users a spatial view of device presence.
+
+  Our project combines distributed signal collection, metadata analysis, and real-time visualization within a single system. We also intend to investigate whether observable metadata can indicate if a device is actively recording. Other systems are available such as Kismet, what makes us unique is an active indication whether a device within your range is currently recording. We intend to have a accessible user-friendly dashboard that translates signal metadata into understandable information about nearby devices in real-time.
+
+
+
 
 ### 1.1 Related Work
 
