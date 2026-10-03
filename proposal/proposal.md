@@ -56,7 +56,14 @@ Date: 〈YYYY-MM-DD〉
 > paragraph. Abstract should not exceed one page. Any abstract exceeded
 > one-page limit must be shortened.
 
-〈Your abstract. Write it last.〉
+The internet of things, (IOT) connects physical devices to computing systems, allowing them to exchange data and communicate through networks. Recording devices and network-connected cameras are commonly found in everyday environments. Devices such as Ring cameras, Meta glasses, and body cameras can record people without them knowing, which makes it harder for people to protect their privacy. These devices emit signals that may be observed and may provide information about their activity and location. By observing and understanding these signals, individuals can better understand and become more aware of devices operating around them.
+
+The problem this project addresses is the difficulty of identifying and understanding nearby network-connected devices in real time. There are existing tool that can detect network devices already, but information provided by these devices does not give the user a good understanding of what devices are present and where they are located. Our project, Distributed Signal Capture for Multi-Node Analysis, proposes a system that helps people protect their privacy by showing them which recording and network-connected devices are around them and where those devices are. The system is multi-node, meaning it uses several capture nodes placed at different spots in an area. Each node collects signals from devices within its range and sends the signal metadata to a shared backend for analysis.
+
+This system will be able to //……….//Although there are already tools available such as Kismet, that already provide network monitoring, out project will be able to identiy if there are devices recroding nearby. This project will also be presented through a user friendly dashboard that will allow the information processed, to be easier to understand to the user. This will essentially allow users to be more aware of the network connected devices operating around them.
+
+〈Goals and outcomes: fill in once §2 Goals and Objectives is written. Summarize the 2–3 goals and what will exist at the end of the project.〉
+
 
 ## 1. Introduction
 
