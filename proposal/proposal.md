@@ -69,8 +69,9 @@ Date: 2026-10-04
 > importance or usefulness of the problem solving or project. Further
 > describes what makes your proposal different from existing ones.
 
-〈Your introduction.〉
+  The Internet of Things (IoT) connects physical devices to computing systems through which they can exchange data. In this project, the devices of interest include network-connected cameras and wearable recording devices, such as Ring cameras, Meta glasses, and body cameras. Being able to understand the presence of such devices involves both signal capture and data analysis. This will include observing signals emitted by devices within range and interpreting those observations to be able to develop a useful picture of the surrounding environment.
 
+  This projects main goal is **privacy awareness**.
 ### 1.1 Related Work
 
 > Describe the related or existing work in detail. This section is like a
