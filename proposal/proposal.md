@@ -58,16 +58,17 @@ The rest of this proposal covers the background, related work, and problem state
 
 ## 1. Introduction
 
-> Describe the necessary background on the project field to help the reader
-> understand the field. Assume the reader has B.S. degree in computer science
-> but not necessary knowledgeable in the selected area. You may also briefly
-> describe motivation of the project if any.
->
-> Specify the problem identified and to be solved in this project, the
-> importance or usefulness of the problem solving or project. Further
-> describes what makes your proposal different from existing ones.
+  The Internet of Things (IoT) connects physical devices to computing systems through which they can exchange data. In this project, the devices of interest include network-connected cameras and wearable recording devices, such as Ring cameras, Meta glasses, and body cameras. Being able to understand the presence of such devices involves both signal capture and data analysis. This will include observing signals emitted by devices within range and interpreting those observations to be able to develop a useful picture of the surrounding environment. This projects main goal is **privacy awareness**, helping individuals map which devices are present and what their observable activity may reveal.
 
-〈Your introduction.〉
+  Our project, *Distributed Signal Capture for Multi-Node Analysis*, aims to map device presence in real time by capturing signals from devices within range as a user enters an area. Our software is intended to operate on either a labtop or a smaller computing platform, such as Raspberry Pi. Backend services will collect signal metadata from each node for analysis, including device fingerprinting to distinguish devices based on their observable traits. A frontend dashboard will present detected devices amd their approximate locations, giving users a spatial view of device presence.
+
+  Our project combines distributed signal collection, metadata analysis, and real-time visualization within a single system. We also intend to investigate whether observable metadata can indicate if a device is actively recording. We intend to have a accessible user-friendly dashboard that translates signal metadata into understandable information about nearby devices in real-time.
+
+  This problem matters because recording devices now capture people who never agreed to be recorded and often cannot tell that they are being recorded. Doorbell cameras record sidewalks and neighbors' doorsteps, smart glasses can record with only a small indicator light to signal it, and body cameras record everyone their wearer interacts with. The people most affected are bystanders rather than device owners. They include guests in short-term rentals, where hidden cameras have been reported; participants in meetings, classes, or interviews where a wearable device may be recording; and residents of shared spaces such as apartments and dormitories. For these people the harm is not only being recorded, but that footage may be stored, uploaded, or shared without their knowledge. At present they have no practical way to check what is recording around them, and the tools that do exist assume technical expertise most of them do not have.
+
+  What makes our project different than others which are similar is that ours focuses on the bystander. Wireless monitoring tools such as Kismet report and track the networks and devices in range, but they assume a technical user will inspect the data. Our system narrows the scope down to recording devices, allowing for more accurate fingerprinting and location tracking. This is combined with a user interface that someone non-technical can read and understand. Additionally, we will investigate whether the signal metadata can show that a device is actively recording, so users don't just know if a camera is nearby, but if it's live and capturing their actions.
+
+
 
 ### 1.1 Related Work
 
