@@ -10,8 +10,9 @@
 |---|---|---|---|
 | Thomas, Eli | @eliThomass | 〈e.g. backend, docs lead〉 | ✅ |
 | Perry, Ryan | @Perryboi8  | 〈…〉                       | |
-| 〈…〉 | @〈…〉 | 〈…〉 | |
-| 〈…〉 | @〈…〉 | 〈…〉 | |
+| Cerasuolo, Jasmine | @jcerasuolo5 | 〈…〉 | |
+| Huynh, Chris | @chroyy | 〈…〉 | |
+| Soo, Jonathan | @soo-nexus | 〈…〉 | |
 
 **Contact person:** Eli Thomas — 23thomasec@csu.fullerton.edu 
 
