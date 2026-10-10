@@ -154,6 +154,29 @@ epic and story in your repository is linked from this section. A fully worked
 version of this, with live issues and a populated board, is in the course
 example repository.〉
 
+  - **Goal 0: Submit a complete, reviewed CPSC 490 proposal** (Epic # <20>)
+    - Objective 0.1 (Proposal): Complete the cover block, §0 Abstract, and §1 Introduction #21
+    - Objective 0.2 (Proposal): Define goals and objectives in §2 and file matching epics and stories #22
+    - Objective 0.3 (Proposal): Write §3 Proposed Approaches and §4 Environment, Resources, and Activities #23
+    - Objective 0.4 (Proposal): Write §5 Project Outcomes and §6 Project Timeline #24
+    - Objective 0.5 (Proposal): Finalize §7 AI Usage and §8 References and submit #25
+
+  - **Goal 1: Collect wireless signal metadata to support awareness of nearby network-connected devices** (Epic # <N>)
+    - Objective 1.1 (Prototype): Demonstrate Wi-Fi access point discovery and metadata collection through a runnable backend #16
+    - Objective
+    - Objective
+    - Objective
+
+  - **Goal 2: Identify selected recording devices and evaluate what their signals reveal.** (Epic #<n>)
+    - Objective
+    - Objective
+    - Objective
+  
+  - **Goal 3: Present device observations through a understandable, timely dashboard.** (Epic #<n>)
+    - Objective
+    - Objective
+    - Objective
+
 ## 3. Proposed Approaches
 
 > Describe your proposed approach to solve the problem, specifying how you
