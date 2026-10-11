@@ -166,15 +166,17 @@ example repository.〉
     - Objective 1.2 (Prototype): Demonstrate Bluetooth discovery and metadata collection. Capture nearby Bluetooth advertisements and record timestamps, signal strength, and advertised identifiers when available. Verify the results using known Bluetooth test devices. #
     - Objective 1.3 (Prototype): Standardize collected wireless metadata. Define and implement a common observation format containing the capture source, protocol, timestamp, available device identifiers, and signal measurement. #
     - Objective 1.4 (Prototype): Store and retrieve collected observations. Persist captured metadata and provide backend access to observations filtered by time range and available device identifier. Verify that a saved test capture can be retrieved after the backend gets restarted. #
-    - Objective 1.5: Support repeated signal collection. Collect observations more at a interval throughout a test session. Verify that new observations receive updated timestamps and that possible scan failures get reported without terminating collection. #
+    - Objective 1.5 (Prototype): Support repeated signal collection. Collect observations more at a interval throughout a test session. Verify that new observations receive updated timestamps and that possible scan failures get reported without terminating collection. #
 
   - **Goal 2: Identify selected recording devices and evaluate what their signals reveal.** (Epic #<n>)
-    - Objective
-    - Objective
-    - Objective
-  
-  - **Goal 3: Present device observations through a understandable, timely dashboard.** (Epic #<n>)
-    - Objective
+    - Objective 2.1 (Data): Build a labeled dataset for selected recording devices. Collect signal metadeta from our approved set of devices, recording the device model and test conditions for each capture. #
+    - Objective 2.2 (Data): Identify candidate device fingerprints. Analyze the collected metadeta from <2.1> to identify observable characteristics that distinguish the selected devices. Document which characteristics remain consistent across repeated captures. #
+    - Objective 2.3 (Backend): Implement and evaluate device identification. Develop a method that classifies the selected devices and does the necessary error checking when reporting an unknown result. #
+    - Objective 2.4 (Backend): Evaluate approximate device location. Estimate device proximity or location using collected signal measurements. Compare estimates against known test positions and report accuracy for distance error. #
+    - Objective 2.5 (Data/Backend): Investigate whether signal metadata indicates recording activity. Compare repeated captures of the same devices while recording and not recording under identical conditions. Report whether observed differences support recording-state detection, include measured performance and possible limitations. #
+
+    - **Goal 3: Present device observations through a understandable, timely dashboard.** (Epic #<n>)
+    - Objective 
     - Objective
     - Objective
 
