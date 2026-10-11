@@ -136,53 +136,35 @@ CI gate G8 fails if one exists that this section does not link. That is what
 keeps the goals in this document and the work on the board from drifting
 apart.
 
-Write each objective the way the guidance above asks — **an action word plus
-the measure that says it is done**, not a role-play sentence:
+- **Goal 0: Submit a complete, reviewed CPSC 490 proposal** [[epic:#20]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/20)
+  - Objective 0.1 (Proposal): Complete the cover block, §0 Abstract, and §1 Introduction [[story:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21)
+  - Objective 0.2 (Proposal): Define goals and objectives in §2 and file matching epics and stories [[story:#22]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/22)
+  - Objective 0.3 (Proposal): Write §3 Proposed Approaches and §4 Environment, Resources, and Activities [[story:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23)
+  - Objective 0.4 (Proposal): Write §5 Project Outcomes and §6 Project Timeline [[story:#24]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/24)
+  - Objective 0.5 (Proposal): Finalize §7 AI Usage and §8 References and submit [[story:#25]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/25)
 
-- **Goal 1: 〈e.g. Secure account management〉** (Epic #〈n〉)
-  - Objective 1.1: 〈Implement member registration and login with hashed
-    credentials, session expiry, and rejection of malformed input.〉 (#〈n〉)
-  - Objective 1.2: 〈Demonstrate the login round-trip in a runnable prototype
-    at the Week-8 in-class check.〉 (#〈n〉)
-- **Goal 2: 〈your second goal〉** (Epic #〈n〉)
-  - Objective 2.1: 〈Action word + what you will complete + how it will be
-    measured〉 (#〈n〉)
+- **Goal 1: Collect wireless signal metadata to support awareness of nearby network-connected devices** [[epic:#47]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/47)
 
-〈Replace the brackets with your own 2–3 goals and their objectives, and put
-the **real issue numbers** in as you file them — gate G8 checks that every
-epic and story in your repository is linked from this section. A fully worked
-version of this, with live issues and a populated board, is in the course
-example repository.〉
+  - Objective 1.1 (Prototype): Demonstrate Wi-Fi access point discovery and metadata collection through a runnable backend [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16)
+  - Objective 1.2 (Prototype): Demonstrate Bluetooth discovery and metadata collection. Capture nearby Bluetooth advertisements and record timestamps, signal strength, and advertised identifiers when available. Verify the results using known Bluetooth test devices. [[story:#45]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/45)
+  - Objective 1.3 (Prototype): Standardize collected wireless metadata. Define and implement a common observation format containing the capture source, protocol, timestamp, available device identifiers, and signal measurement. [[story:#46]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/46)
+  - Objective 1.4 (Prototype): Store and retrieve collected observations. Persist captured metadata and provide backend access to observations filtered by time range and available device identifier. Verify that a saved test capture can be retrieved after the backend gets restarted. [[story:#48]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/48)
+  - Objective 1.5 (Prototype): Support repeated signal collection. Collect observations at an interval throughout a test session. Verify that new observations receive updated timestamps and that possible scan failures get reported without terminating collection. [[story:#49]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/49)
 
-- **Goal 0: Submit a complete, reviewed CPSC 490 proposal** (Epic # <20>)
-  - Objective 0.1 (Proposal): Complete the cover block, §0 Abstract, and §1 Introduction #21
-  - Objective 0.2 (Proposal): Define goals and objectives in §2 and file matching epics and stories #22
-  - Objective 0.3 (Proposal): Write §3 Proposed Approaches and §4 Environment, Resources, and Activities #23
-  - Objective 0.4 (Proposal): Write §5 Project Outcomes and §6 Project Timeline #24
-  - Objective 0.5 (Proposal): Finalize §7 AI Usage and §8 References and submit #25
+- **Goal 2: Identify selected recording devices and evaluate what their signals reveal.** [[epic:#50]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/50)
 
-- **Goal 1: Collect wireless signal metadata to support awareness of nearby network-connected devices** (Epic # <N>)
+  - Objective 2.1 (Data): Build a labeled dataset for selected recording devices. Collect signal metadata from our approved set of devices, recording the device model and test conditions for each capture. [[story:#51]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/51)
+  - Objective 2.2 (Data): Identify candidate device fingerprints. Analyze the collected metadata from Objective 2.1 to identify observable characteristics that distinguish the selected devices. Document which characteristics remain consistent across repeated captures. [[story:#52]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/52)
+  - Objective 2.3 (Backend): Implement and evaluate device identification. Develop a method that classifies the selected devices and does the necessary error checking when reporting an unknown result. [[story:#53]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/53)
+  - Objective 2.4 (Backend): Evaluate approximate device location. Estimate device proximity or location using collected signal measurements. Compare estimates against known test positions and report accuracy for distance error. [[story:#54]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/54)
+  - Objective 2.5 (Data/Backend): Investigate whether signal metadata indicates recording activity. Compare repeated captures of the same devices while recording and not recording under identical conditions. Report whether observed differences support recording-state detection, including measured performance and possible limitations. [[story:#55]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/55)
 
-  - Objective 1.1 (Prototype): Demonstrate Wi-Fi access point discovery and metadata collection through a runnable backend #16
-  - Objective 1.2 (Prototype): Demonstrate Bluetooth discovery and metadata collection. Capture nearby Bluetooth advertisements and record timestamps, signal strength, and advertised identifiers when available. Verify the results using known Bluetooth test devices. #
-  - Objective 1.3 (Prototype): Standardize collected wireless metadata. Define and implement a common observation format containing the capture source, protocol, timestamp, available device identifiers, and signal measurement. #
-  - Objective 1.4 (Prototype): Store and retrieve collected observations. Persist captured metadata and provide backend access to observations filtered by time range and available device identifier. Verify that a saved test capture can be retrieved after the backend gets restarted. #
-  - Objective 1.5 (Prototype): Support repeated signal collection. Collect observations at a interval throughout a test session. Verify that new observations receive updated timestamps and that possible scan failures get reported without terminating collection. #
-
-- **Goal 2: Identify selected recording devices and evaluate what their signals reveal.** (Epic #<n>)
-
-  - Objective 2.1 (Data): Build a labeled dataset for selected recording devices. Collect signal metadeta from our approved set of devices, recording the device model and test conditions for each capture. #
-  - Objective 2.2 (Data): Identify candidate device fingerprints. Analyze the collected metadeta from <2.1> to identify observable characteristics that distinguish the selected devices. Document which characteristics remain consistent across repeated captures. #
-  - Objective 2.3 (Backend): Implement and evaluate device identification. Develop a method that classifies the selected devices and does the necessary error checking when reporting an unknown result. #
-  - Objective 2.4 (Backend): Evaluate approximate device location. Estimate device proximity or location using collected signal measurements. Compare estimates against known test positions and report accuracy for distance error. #
-  - Objective 2.5 (Data/Backend): Investigate whether signal metadata indicates recording activity. Compare repeated captures of the same devices while recording and not recording under identical conditions. Report whether observed differences support recording-state detection, include measured performance and possible limitations. #
-
-- **Goal 3: Present device observations through a understandable, timely dashboard.** (Epic #<n>)
-  - Objective 3.1 (Frontend): Display detected device observations. Present available device identification, wireless protocol, signal strength and last-seen time. Verify that displayed values match backend results for a known test dataset. #
-  - Objective 3.2 (Frontend): Update observations automatically (RT), Refresh the dashboard as new observation become avaiable. Measure the delay between backend receipt and dashboard display, have it be in Real-Time. #
-  - Objective 3.3 (Frontend): Present identification uncertainty and device proximity. Display identification confidence and avaiable proximity or locationn estimates. Verify that unknown devices, unavaiable estimates, and stale observations are clearly labeled. #
-  - Objective 3.4 (Frontend): Provide filtering and observation details. Allow users to filter observation by protocol, device classification, and last-seen time, and inspect an individuals device's observations. #
-  - Objective 3.5 (Frontend): Evaluate dashboard usability. Ask users to identify a detected device, determine when it was last observed and interpret the information. Address any usability problems found. #
+- **Goal 3: Present device observations through an understandable, timely dashboard.** [[epic:#56]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/56)
+  - Objective 3.1 (Frontend): Display detected device observations. Present available device identification, wireless protocol, signal strength and last-seen time. Verify that displayed values match backend results for a known test dataset. [[story:#57]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/57)
+  - Objective 3.2 (Frontend): Update observations automatically in real time. Refresh the dashboard as new observations become available. Measure the delay between backend receipt and dashboard display, and keep it in real time. [[story:#58]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/58)
+  - Objective 3.3 (Frontend): Present identification uncertainty and device proximity. Display identification confidence and available proximity or location estimates. Verify that unknown devices, unavailable estimates, and stale observations are clearly labeled. [[story:#59]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/59)
+  - Objective 3.4 (Frontend): Provide filtering and observation details. Allow users to filter observations by protocol, device classification, and last-seen time, and inspect an individual device's observations. [[story:#60]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/60)
+  - Objective 3.5 (Frontend): Evaluate dashboard usability. Ask users to identify a detected device, determine when it was last observed, and interpret the information. Address any usability problems found. [[story:#61]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/61)
 
 ## 3. Proposed Approaches
 
