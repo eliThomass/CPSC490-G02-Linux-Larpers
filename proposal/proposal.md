@@ -88,6 +88,10 @@ Each of these projects contributes to part of what our project will do. To start
 〈Your problem statement(s), **concise** — a few sentences each, no
 background (that was §1) and no solution (that is §3). Number them P1, P2, …
 so later sections can refer back.〉
+Several problems are solved with our project with each of its goals
+- **P1: Devices emit signals that can be observed, but it is difficult to identify and understand nearby network-connected devices in real time. This requires frequent signal capture and analysis to provide a comprehensive view of the network environment.
+- **P2: Users lack a comprehensive view of their network environment, leading to potential security vulnerabilities from certain IOT devices such as cameras. Identifying, locating, and their potential usage is vital to ensuring privacy and stopping users from being susceptible to invasive procedures.
+- **P3: Current network monitoring tools are not user-friendly, making it difficult for non-experts to effectively manage and troubleshoot their networks. Having a clear dashboard that transmits all crucial information in a user-friendly manner is essential for users to understand their network environment and make informed decisions about their privacy and security.
 
 **Every problem here must connect to the goals and objectives in §2, and
 every goal in §2 must trace back to a problem here.** A goal with no problem
@@ -97,8 +101,9 @@ is what the final project report is graded against.
 
 | Problem | Addressed by |
 |---|---|
-| P1 〈one line〉 | 〈Goal 1 (#n)〉 |
-| P2 〈one line〉 | 〈Goal 2 (#n)〉 |
+| P1: No consistent and continuous capture of nearby signals | 〈Goal 1: Objectives 1.1-1.5 | Epic: 47 | Stories: 16, 45, 46, 48 |
+| P2: Tools do not show the specific location and purpose of devices in their network | 〈Goal 2: Objectives 2.1-2.5 | Epic: 50 | Stories: 51, 52, 53, 54, 55 |
+| P3: Output needs to be readble and easily understandable | 〈Goal 3: Objectives 3.1-3.5  | Epic: 56 | Stories: 57, 58, 59, 60, 61 |
 
 ## 2. Goals and Objectives
 
