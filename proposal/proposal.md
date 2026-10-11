@@ -166,7 +166,7 @@ example repository.〉
     - Objective 1.2 (Prototype): Demonstrate Bluetooth discovery and metadata collection. Capture nearby Bluetooth advertisements and record timestamps, signal strength, and advertised identifiers when available. Verify the results using known Bluetooth test devices. #
     - Objective 1.3 (Prototype): Standardize collected wireless metadata. Define and implement a common observation format containing the capture source, protocol, timestamp, available device identifiers, and signal measurement. #
     - Objective 1.4 (Prototype): Store and retrieve collected observations. Persist captured metadata and provide backend access to observations filtered by time range and available device identifier. Verify that a saved test capture can be retrieved after the backend gets restarted. #
-    - Objective 1.5 (Prototype): Support repeated signal collection. Collect observations more at a interval throughout a test session. Verify that new observations receive updated timestamps and that possible scan failures get reported without terminating collection. #
+    - Objective 1.5 (Prototype): Support repeated signal collection. Collect observations at a interval throughout a test session. Verify that new observations receive updated timestamps and that possible scan failures get reported without terminating collection. #
 
   - **Goal 2: Identify selected recording devices and evaluate what their signals reveal.** (Epic #<n>)
     - Objective 2.1 (Data): Build a labeled dataset for selected recording devices. Collect signal metadeta from our approved set of devices, recording the device model and test conditions for each capture. #
@@ -176,9 +176,14 @@ example repository.〉
     - Objective 2.5 (Data/Backend): Investigate whether signal metadata indicates recording activity. Compare repeated captures of the same devices while recording and not recording under identical conditions. Report whether observed differences support recording-state detection, include measured performance and possible limitations. #
 
     - **Goal 3: Present device observations through a understandable, timely dashboard.** (Epic #<n>)
-    - Objective 
-    - Objective
-    - Objective
+    - Objective 3.1 (Frontend): Display detected device observations. Present available device identification, wireless protocol, signal strength and last-seen time. Verify that displayed values match backend results for a known test dataset. #
+    - Objective 3.2 (Frontend): Update observations automatically (RT), Refresh the dashboard as new observation become avaiable. Measure the delay between backend receipt and dashboard display, have it be in Real-Time. #
+
+    - Objective 3.3 (Frontend): Present identification uncertainty and device proximity. Display identification confidence and avaiable proximity or locationn estimates. Verify that unknown devices, unavaiable estimates, and stale observations are clearly labeled. #
+
+    - Objective 3.4 (Frontend): Provide filtering and observation details. Allow users to filter observation by protocol, device classification, and last-seen time, and inspect an individuals device's observations. #
+
+    - Objective 3.5 (Frontend): Evaluate dashboard usability. Ask users to identify a detected device, determine when it was last observed and interpret the information. Address any usability problems found. #
 
 ## 3. Proposed Approaches
 
