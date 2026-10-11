@@ -163,9 +163,10 @@ example repository.〉
 
   - **Goal 1: Collect wireless signal metadata to support awareness of nearby network-connected devices** (Epic # <N>)
     - Objective 1.1 (Prototype): Demonstrate Wi-Fi access point discovery and metadata collection through a runnable backend #16
-    - Objective
-    - Objective
-    - Objective
+    - Objective 1.2 (Prototype): Demonstrate Bluetooth discovery and metadata collection. Capture nearby Bluetooth advertisements and record timestamps, signal strength, and advertised identifiers when available. Verify the results using known Bluetooth test devices. #
+    - Objective 1.3 (Prototype): Standardize collected wireless metadata. Define and implement a common observation format containing the capture source, protocol, timestamp, available device identifiers, and signal measurement. #
+    - Objective 1.4 (Prototype): Store and retrieve collected observations. Persist captured metadata and provide backend access to observations filtered by time range and available device identifier. Verify that a saved test capture can be retrieved after the backend gets restarted. #
+    - Objective 1.5: Support repeated signal collection. Collect observations more at a interval throughout a test session. Verify that new observations receive updated timestamps and that possible scan failures get reported without terminating collection. #
 
   - **Goal 2: Identify selected recording devices and evaluate what their signals reveal.** (Epic #<n>)
     - Objective
