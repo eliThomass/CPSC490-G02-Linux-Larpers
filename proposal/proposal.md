@@ -96,13 +96,6 @@ Several problems are solved with our project with each of its goals:
 
 ## 2. Goals and Objectives
 
-- **Goal 0: Submit a complete, reviewed CPSC 490 proposal** [[epic:#20]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/20)
-  - Objective 0.1 (Proposal): Complete the cover block, §0 Abstract, and §1 Introduction [[story:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21)
-  - Objective 0.2 (Proposal): Define goals and objectives in §2 and file matching epics and stories [[story:#22]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/22)
-  - Objective 0.3 (Proposal): Write §3 Proposed Approaches and §4 Environment, Resources, and Activities [[story:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23)
-  - Objective 0.4 (Proposal): Write §5 Project Outcomes and §6 Project Timeline [[story:#24]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/24)
-  - Objective 0.5 (Proposal): Finalize §7 AI Usage and §8 References and submit [[story:#25]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/25)
-
 - **Goal 1: Collect wireless signal metadata to support awareness of nearby network-connected devices** [[epic:#47]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/47)
 
   - Objective 1.1 (Prototype): Demonstrate Wi-Fi access point discovery and metadata collection through a runnable backend [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16)
@@ -121,7 +114,7 @@ Several problems are solved with our project with each of its goals:
 
 - **Goal 3: Present device observations through an understandable, timely dashboard.** [[epic:#56]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/56)
   - Objective 3.1 (Frontend): Display detected device observations. Present available device identification, wireless protocol, signal strength and last-seen time. Verify that displayed values match backend results for a known test dataset. [[story:#57]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/57)
-  - Objective 3.2 (Frontend): Update observations automatically in real time. Refresh the dashboard as new observations become available. Measure the delay between backend receipt and dashboard display, and keep it in real time. [[story:#58]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/58)
+  - Objective 3.2 (Frontend): Update observations automatically in real time. Refresh the dashboard as new observations become available. Measure the delay between capture and dashboard display, and display each observation within 2 seconds of capture. [[story:#58]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/58)
   - Objective 3.3 (Frontend): Present identification uncertainty and device proximity. Display identification confidence and available proximity or location estimates. Verify that unknown devices, unavailable estimates, and stale observations are clearly labeled. [[story:#59]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/59)
   - Objective 3.4 (Frontend): Provide filtering and observation details. Allow users to filter observations by protocol, device classification, and last-seen time, and inspect an individual device's observations. [[story:#60]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/60)
   - Objective 3.5 (Frontend): Evaluate dashboard usability. Ask users to identify a detected device, determine when it was last observed, and interpret the information. Address any usability problems found. [[story:#61]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/61)
