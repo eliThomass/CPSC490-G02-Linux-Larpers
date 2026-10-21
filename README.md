@@ -8,11 +8,14 @@
 
 | Name | GitHub | Role | Leader |
 |---|---|---|---|
-| Thomas, Eli | @eliThomass |  | ✅ |
-| Perry, Ryan | @Perryboi8  |  | |
-| Cerasuolo, Jasmine | @jcerasuolo5 |  | |
-| Huynh, Chris | @chroyy |  | |
-| Soo, Jonathan | @soo-nexus |  | |
+| Thomas, Eli | @eliThomass | Hardware, Backend | ✅ |
+| Perry, Ryan | @Perryboi8  | Hardware, Backend | |
+| Cerasuolo, Jasmine | @jcerasuolo5 | Frontend, Backend | |
+| Huynh, Chris | @chroyy | Frontend, Backend | |
+| Soo, Jonathan | @soo-nexus | Hardware, Backend | |
+
+**Roles:** Frontend = dashboard. Backend = database and API.
+Hardware = ESP32 firmware. Each member picked two, so the roles overlap and everyone can contribute to different areas of the project.
 
 **Contact person:** Eli Thomas — 23thomasec@csu.fullerton.edu 
 
