@@ -202,18 +202,9 @@ traceable to the objective it serves.〉
 
 ## 5. Project Outcomes
 
-> Describe the outcomes or deliverables, e.g., final project report, user
-> manuals, source code, data or database files, etc.
->
-> Note: the deliverables always include the team GitHub repository, which
-> must already contain prototype v0 (a thin end-to-end proof-of-concept,
-> however small, running when this proposal is submitted). Briefly describe
-> what your v0 demonstrates and how to run it.
+By the end of CPSC 491, the team intends to develop a system that collects Wi-Fi and Bluetooth metadata, analyzes observations to identify selected devices, estimates their approximate locations, and presents the results through a user-friendly dashboard. The project will include the source code in the team GitHub repository, a labeled dataset of selected devices, findings determining whether Wi-Fi and Bluetooth signal metadata can indicate when a device is actively recording, and an evaluation of the dashboard's usability. The team will also provide documentation explaining how to set up and run the system, along with a final project report describing the implementation, results, limitations, and lessons learned. The system is intended to help users better understand what recording devices may be present in a nearby environment and where those devices might be located.
 
-〈**One or two paragraphs** explaining the project outcome overall — what will
-exist when the project is finished, and what it will let someone do. Keep it
-prose, not a checklist; name the deliverables inside the paragraphs, and say
-briefly what prototype v0 demonstrates today and how to run it.〉
+Prototype v0 will demonstrate the initial device-discovery functionality and provide a foundation for later development. 〈Update this sentence after Issue #16 is merged: describe the functionality that v0 actually implements, the information it returns, and the steps required to run it.〉
 
 ## 6. Project Timeline
 
