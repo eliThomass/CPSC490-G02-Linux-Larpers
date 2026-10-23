@@ -120,85 +120,122 @@ Several problems are solved with our project with each of its goals:
 
 ## 3. Proposed Approaches
 
-> Describe your proposed approach to solve the problem, specifying how you
-> will achieve the stated goals. List some possible strategies.
+<!-- NOTE (delete this note when §3 is done): The list below still needs
+explaining. For each approach, say what we will do, which alternatives we
+considered (for example, building on Kismet [4], which §1 discusses), and why
+we chose ours. Write it as an argument, not a manual: a reader should finish
+§3 knowing what we will do and why that instead of the alternatives.
+- Clear and concise: a few paragraphs, or a short list of strategies with one
+  line of trade-off each. If it runs past a page, it belongs in §4.
+- Keep details out: tooling, platforms, frameworks, DBMS, environment setup,
+  diagrams, and the work breakdown all go in §4. If a sentence names a version,
+  a library, or a configuration, move it to §4 and leave a pointer here
+  ("the implementation stack is detailed in §4"). -->
 
-〈Your approach — **clear and concise**. State the strategy you chose, the
-alternatives you considered, and the reasoning that decided between them.
-Think of this as the argument, not the manual: a reader should finish this
-section understanding *what* you will do and *why that* rather than the
-alternatives.〉
-
-**Keep the details out of this section.** Tooling, platforms, frameworks,
-DBMS choices, environment setup, diagrams, and the work breakdown all belong
-in §4 (Required Environment, Resources, and Planned Activities). If a
-sentence here names a version number, a library, or a configuration, it
-probably belongs in §4 — leave a pointer instead ("the implementation stack
-is detailed in §4").
-
-〈A few paragraphs, or a short list of candidate strategies with one line of
-trade-off each. If it runs past a page, you are writing §4.〉
+- Capture Wi-Fi and Bluetooth signal metadata from devices in range (Goal 1).
+- Convert every capture into one common observation format and store it in a central backend (Objectives 1.3, 1.4).
+- Fingerprint the selected recording devices using a labeled dataset we collect ourselves (Objectives 2.1–2.3).
+- Estimate device proximity from signal strength and check it against known test positions (Objective 2.4).
+- Compare captures of the same devices while recording and not recording to test whether recording activity is detectable (Objective 2.5).
+- Show detected devices on a dashboard that updates in real time (Goal 3).
 
 ## 4. Required Environment, Resources, and Planned Activities
 
-> Review the required and available resources and environment to complete
-> your project. For example, server, platform, software tools, operating
-> systems, DBMS, or any required skills.
->
-> Describe the expected activities to achieve the stated goals, e.g.,
-> software development process.
+<!-- NOTE (delete this note when §4 is done): §4 holds the resources and
+environment we need, the expected activities, and the diagrams.
+- Diagrams go in this section: at minimum the high-level architecture and
+  system context diagrams, plus the ER diagram and data flow diagram. Keep the
+  authoritative copies in docs/design/ (editable source and exported image)
+  and embed the exported image here.
+- Number and caption every figure, and point at it from the prose ("Figure 1
+  shows ..."). A figure the text never mentions is decoration.
+- Every box and arrow must match what we actually built or decided. See
+  docs/design/DIAGRAMS.md for tools and conventions. -->
 
-〈Your environment, resources, and planned activities.〉
+### Environment and resources
 
-**Diagrams belong in this section.** Include at minimum a high-level
-architecture diagram and a system (context) diagram; add the ER/EER model and
-a data-flow diagram where they help the reader understand what you are
-building and what it depends on. Draw them with any graphical tool
-(Lucidchart, draw.io, Miro, Mermaid, ERDPlus, Figma), keep the authoritative
-copies in `docs/design/` with both editable source and exported image, and
-reference them here.
+<!-- NOTE: List the hardware, software tools, platforms, operating systems,
+DBMS, and any required skills. Operating system and required skills are not
+listed yet. §0 and §1 still say the software runs on a laptop or a Raspberry
+Pi; #81 updates them to match the ESP32 decision. -->
 
-〈Number every figure, caption it, and point at it from the prose — "Figure 1
-shows the three deployment tiers and the trust boundary between them." A
-figure the text never mentions is decoration. See `docs/design/DIAGRAMS.md`
-for tools, conventions, and the rule that every box and arrow must be
-verified against reality.〉
+Our group chose this tech stack at our 2026-10-20 meeting ([#79](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/79)).
+
+- **Hardware (capture side):** ESP32, programmed in C/C++
+- **Backend API:** FastAPI
+- **Database (DBMS):** PostgreSQL
+- **Frontend:** Angular
 
 ### Specification and design documents
 
-**Every specification and design document the team writes is listed here**
-with the objective it serves. This section is the index of the project's
-technical detail: §3 holds the argument, §4 holds the documents that make it
-buildable. CI gate G9 fails if a document exists in `docs/specs/` or
-`docs/design/` that this section does not link.
+No specification or design documents have been merged yet. Each one is added
+to this table in the pull request that creates it.
+
+<!-- NOTE: Planned design documents, one per diagram, each with its own issue,
+as assigned at the 2026-10-22 meeting (#80): data flow diagram (Eli, #77),
+system context diagram (Jasmine), ER diagram (Ryan), high-level architecture
+diagram (Jonathan). Each diagram's figure is
+numbered, captioned, and referenced from this section when it lands.
+- Every specification and design document goes in this table: path, kind
+  (specification or design), what it covers, and its issues. CI gate G9 fails
+  if a document in docs/specs/ or docs/design/ is not listed here.
+- Each document's first line names its epic and stories
+  ("> Epic: #N · Stories: #N, #N", gate G2), so the trail runs both ways.
+- docs/specs/example-spec.md and docs/design/example-design.md are the
+  scaffold's worked examples. Read them, then delete them once we have our
+  own. -->
 
 | Document | Kind | Covers | Issues |
 |---|---|---|---|
-| 〈docs/specs/account-management.md〉 | specification | 〈account management requirements〉 | 〈#n, #n〉 |
-| 〈docs/design/architecture.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
-
-〈The scaffold ships `docs/specs/example-spec.md` and
-`docs/design/example-design.md` as worked examples — read them, then delete
-them once you have your own, and list yours here.〉
-
-〈Replace these rows with your own. Each document names its epic and stories
-in its own first lines too (gate G2), so the trail runs both ways.〉
 
 ### Planned activities — the work items
 
-The goals and objectives live in §2 as epics and user stories. **This section
-links every *other* work item: features, enhancements, bugs, tasks, and
-sub-tasks** — the concrete activities that deliver those objectives. CI gate
-G8 fails if such an issue exists that this section does not link.
+Every work item other than the epics and user stories in §2 is listed here
+with its parent, owner, and sprint.
+
+<!-- NOTE: Add a row in the same PR whenever someone files a new issue that is
+not an epic or user story (feature, enhancement, bug, task, sub-task, or
+meeting). CI gate G8 fails if one is missing. Epics and stories go in §2.
+- Use typed links: the text [[task:#N]] linked to the issue's URL, as in the
+  rows below, so the Word export lists them in Appendix A. Meetings use plain
+  #N link text because the export has no meeting type.
+- Keep the Owner and Sprint columns in step with the issue's assignee and
+  milestone. -->
 
 | Issue | Type | Activity | Parent | Owner | Sprint |
 |---|---|---|---|---|---|
-| 〈#n〉 | 〈task〉 | 〈stand up the prototype login endpoint〉 | 〈#story〉 | 〈owner〉 | 〈Sprint 1〉 |
-| 〈#n〉 | 〈feature/enhancement/bug/task/sub-task〉 | 〈…〉 | 〈#story〉 | 〈…〉 | 〈…〉 |
-
-〈Replace these rows with your own, and keep the table current as you file new
-issues — with §2 it gives a reader every planned activity in one place, each
-traceable to the objective it serves.〉
+| [[task:#6]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/6) | task | Update main README | — | — | — |
+| [[task:#8]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/8) | task | Update proposal sources with related works | — | — | — |
+| [[task:#9]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/9) | task | Create epics & stories | — | — | — |
+| [[task:#10]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/10) | task | Draft §1 Introduction background | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | @Perryboi8 | Sprint 1 |
+| [[task:#11]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/11) | task | Fill the cover fields | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | — | Sprint 1 |
+| [[task:#12]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/12) | task | Draft §1 problem & difference | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | @soo-nexus | Sprint 1 |
+| [[task:#13]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/13) | task | Draft §0 Abstract | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | @jcerasuolo5 | Sprint 1 |
+| [[task:#15]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/15) | task | Sync develop with main | — | — | Sprint 1 |
+| [[task:#17]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/17) | task | Verify Wi-Fi Scanning | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | — | Sprint 2 |
+| [[task:#18]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/18) | task | Implement scanner and metadata format | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | — | Sprint 2 |
+| [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | task | Complete the cover block, §0 Abstract, and §1 Introduction | — | — | Sprint 1 |
+| [[task:#22]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/22) | task | Define goals and objectives in §2 and file matching epics and stories | — | @Perryboi8 | Sprint 1 |
+| [[task:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23) | task | Write §3 Proposed Approaches and §4 Environment, Resources, and Activities | — | — | Sprint 2 |
+| [[task:#24]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/24) | task | Write §5 Project Outcomes and §6 Project Timeline | — | @jcerasuolo5 | Sprint 2 |
+| [[task:#25]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/25) | task | Finalize §7 AI Usage and §8 References and submit | — | — | Sprint 3 |
+| [[task:#36]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/36) | task | Draft §1.1 Related Work | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | — | Sprint 1 |
+| [[task:#37]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/37) | task | Draft §1.2 Problem Statements | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | @chroyy | Sprint 1 |
+| [[task:#38]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/38) | task | Cite §1 claims and add their §8 references | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | — | Sprint 1 |
+| [[task:#39]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/39) | task | Proofread §0 and §1 for HW#5 | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | — | Sprint 1 |
+| [[task:#40]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/40) | task | Draft §2 Goals and Objectives | [[task:#22]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/22) | @Perryboi8 | Sprint 1 |
+| [[task:#41]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/41) | task | File §2 epics and user stories and link them in §2 | [[task:#22]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/22) | — | Sprint 1 |
+| [[task:#67]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/67) | task | Secure a dedicated project room | — | @eliThomass, @soo-nexus, @Perryboi8, @jcerasuolo5 | Sprint 2 |
+| [[task:#68]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/68) | task | Remove Flock camera data-retrieval content from the proposal | — | @eliThomass, @Perryboi8 | Sprint 2 |
+| [[task:#69]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/69) | task | Decide individual team roles and record them in README.md | — | @eliThomass | Sprint 2 |
+| [#70](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/70) | meeting | Sponsor meeting 2026-10-15: proposal feedback, Flock constraint, roles, prototype | — | @eliThomass, @Perryboi8 | Sprint 2 |
+| [#72](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/72) | meeting | Discord Call | — | @eliThomass, @Perryboi8 | Sprint 2 |
+| [[task:#73]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/73) | task | Remove leftover README.old.md | — | @eliThomass | Sprint 2 |
+| [[task:#75]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/75) | task | Sync develop with main and switch to the Gitflow Workflow | — | @jcerasuolo5 | Sprint 2 |
+| [[task:#77]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/77) | task | Draw the Level 0 and Level 1 data flow diagrams | — | @eliThomass | Sprint 2 |
+| [#79](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/79) | meeting | Team meeting 2026-10-20: tech stack, roles, ESP32 order list | — | @eliThomass | Sprint 2 |
+| [#80](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/80) | meeting | Team meeting 2026-10-22: diagram assignments, Sprint 2 progress, RTX presentation | — | @eliThomass | Sprint 2 |
+| [[task:#81]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/81) | task | Update §0 and §1 to name the ESP32 as the capture hardware | — | @eliThomass | Sprint 2 |
 
 ## 5. Project Outcomes
 
