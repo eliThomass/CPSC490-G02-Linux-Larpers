@@ -208,23 +208,27 @@ Prototype v0 will demonstrate the initial device-discovery functionality and pro
 
 ## 6. Project Timeline
 
-> Identifies tasks (project objectives) to be performed, milestones to be
-> met, and the estimated number of hours for each task.
-
-〈**This is the plan for CPSC 491 next semester — the implementation timeline,
-not this semester's proposal work.** Identify the tasks (your objectives from
-§2), the milestones, and the estimated hours for each, in the order they will
-be built. State the assumptions it rests on (sponsor availability, data
-access, hardware).〉
+This is the implementation plan for CPSC 491 next semester. The tasks are organized in the order they will be built, based on dependencies between the project objectives. The plan begins with data collection and storage, continues with device identification and location estimation, and then moves to dashboard development and usability evaluation. Dashboard development may begin earlier using saved test data while backend analysis continues.
 
 | Task (objective) | Milestone | Owner | Est. hours | Spring phase |
-|---|---|---|---|---|
-| 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
-| 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
+|---|---|---|---:|---|
+| 1.1 Wi-Fi discovery and metadata | A runnable backend discovers nearby Wi-Fi access points and returns their metadata. | Hardware/Backend: Eli, Ryan, Jonathan | 12 | Phase 1: Data Collection |
+| 1.2 Bluetooth discovery | Bluetooth advertisements are captured with timestamps, signal strength, and identifiers when available, verified with known test devices. | Hardware/Backend: Eli, Ryan, Jonathan | 12 | Phase 1: Data Collection |
+| 1.3 Standard observation format | Wi-Fi and Bluetooth observations share one format with capture source, protocol, timestamp, device identifiers, and signal measurement. | Backend team | 8 | Phase 1: Data Collection |
+| 1.4 Store and retrieve observations | A saved test capture can be retrieved, filtered by time range and device identifier, after the backend restarts. | Backend team | 10 | Phase 1: Data Collection |
+| 1.5 Repeated collection | New observations receive updated timestamps, and scan failures are reported without stopping collection. | Backend team | 8 | Phase 1: Data Collection |
+| 2.1 Labeled device dataset | Signal metadata is collected from the approved devices, with the device model and test conditions recorded for each capture. | Hardware/Backend: Eli, Ryan, Jonathan | 12 | Phase 2: Device Analysis |
+| 2.2 Candidate fingerprints | Characteristics that distinguish the selected devices are documented, including which stay consistent across repeated captures. | Backend team | 12 | Phase 2: Device Analysis |
+| 2.3 Device identification | The selected devices are classified, and unrecognized devices are reported as unknown. | Backend team | 16 | Phase 2: Device Analysis |
+| 2.4 Approximate location | Proximity estimates are compared against known test positions and the distance error is reported. | Backend team | 16 | Phase 2: Device Analysis |
+| 2.5 Recording-activity investigation | Findings document whether Wi-Fi and Bluetooth signal metadata can indicate when a device is actively recording, including the limitations of this approach. | Backend team | 12 | Phase 2: Device Analysis |
+| 3.1 Display observations | Displayed values match backend results for a known test dataset. | Frontend: Jasmine, Chris | 12 | Phase 3: Dashboard |
+| 3.2 Real-time updates | Each observation is displayed within two seconds of capture. | Frontend: Jasmine, Chris | 10 | Phase 3: Dashboard |
+| 3.3 Confidence and proximity display | Unknown devices, unavailable estimates, and stale observations are clearly labeled. | Frontend: Jasmine, Chris | 8 | Phase 3: Dashboard |
+| 3.4 Filtering and details | Users can filter by protocol, device classification, and last-seen time, and inspect one device's observations. | Frontend: Jasmine, Chris | 8 | Phase 3: Dashboard |
+| 3.5 Usability evaluation | Test users can identify a detected device, tell when it was last seen, and interpret the information; problems found are addressed. | Frontend: Jasmine, Chris | 10 | Phase 4: Evaluation and Finalization |
 
-〈Do **not** put this fall's four proposal sprints here — those live on the
-project board and in `docs/sprint-reviews/`. This section answers "how does
-the system actually get built next semester?"〉
+The timeline assumes that the ESP32 hardware order is approved and arrives in time for implementation, the team has access to the selected test devices needed to build the labeled dataset, and the project sponsors remain available for periodic feedback. The team also assumes access to a secure room for hardware testing. Testing will not be conducted on school Flock cameras, and private company data will not be used, in accordance with sponsor instructions. The team must also determine which minimum functionality can be demonstrated to the sponsors by their requested mid-November prototype milestone while continuing development of the full system during CPSC 491.
 
 ## 7. AI Usage
 
