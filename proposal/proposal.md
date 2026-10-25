@@ -164,6 +164,8 @@ figure the text never mentions is decoration. See `docs/design/DIAGRAMS.md`
 for tools, conventions, and the rule that every box and arrow must be
 verified against reality.〉
 
+![ER_Diagram](docs/design/NodeAnalysisERdiagram.png)
+
 ### Specification and design documents
 
 **Every specification and design document the team writes is listed here**
