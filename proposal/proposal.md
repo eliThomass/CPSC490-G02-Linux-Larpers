@@ -156,8 +156,8 @@ environment we need, the expected activities, and the diagrams.
 
 <!-- NOTE: List the hardware, software tools, platforms, operating systems,
 DBMS, and any required skills. Operating system and required skills are not
-listed yet. §0 and §1 still say the software runs on a laptop or a Raspberry
-Pi; #81 updates them to match the ESP32 decision. -->
+listed yet. The instructor's 2026-10-26 review also asks for the reason
+behind each choice, not just the list. -->
 
 Our group chose this tech stack at our 2026-10-20 meeting ([#79](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/79)).
 
@@ -170,6 +170,25 @@ We also propose the following, pending sponsor approval ([#86](https://github.co
 
 - **Hosting:** one AWS Lightsail server running the FastAPI backend and the PostgreSQL database together
 - **Development access:** teammates reach the server from their own machines through SSH tunnels
+
+### Diagrams
+
+Figure 1 shows the high-level architecture: the ESP32 capture node passively
+captures Wi-Fi and Bluetooth signals and sends observations to the FastAPI
+backend, which stores them in PostgreSQL on one server, and the dashboard
+requests them from the backend to show the user nearby devices. [[task:#84]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/84)
+
+![High-level architecture: ESP32 capture nodes send observations to a FastAPI backend and PostgreSQL on one server; the dashboard requests them over HTTP(S).](../docs/design/diagrams/architecture.drawio.png)
+
+*Figure 1 — High-level architecture: ESP32 capture nodes send observations to
+a FastAPI backend and PostgreSQL on one server; the dashboard requests them
+over HTTP(S).*
+
+<!-- NOTE: The ER diagram (Ryan, #82) and the data flow diagram (Eli, #77,
+docs/design/data-flow.md) reach develop with PR #90. Add them here as
+Figures 2 and 3 after it merges, with captions and a sentence pointing at
+each, and add data-flow.md to the documents table below. The system context
+diagram (Jasmine) is still to come. -->
 
 ### Specification and design documents
 
@@ -209,16 +228,16 @@ meeting). CI gate G8 fails if one is missing. Epics and stories go in §2.
 
 | Issue | Type | Activity | Parent | Owner | Sprint |
 |---|---|---|---|---|---|
-| [[task:#6]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/6) | task | Update main README | — | — | — |
-| [[task:#8]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/8) | task | Update proposal sources with related works | — | — | — |
-| [[task:#9]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/9) | task | Create epics & stories | — | — | — |
+| [[task:#6]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/6) | task | Update main README | — | — | Sprint 1 |
+| [[task:#8]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/8) | task | Update proposal sources with related works | — | — | Sprint 1 |
+| [[task:#9]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/9) | task | Create epics & stories | — | — | Sprint 1 |
 | [[task:#10]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/10) | task | Draft §1 Introduction background | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | @Perryboi8 | Sprint 1 |
 | [[task:#11]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/11) | task | Fill the cover fields | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | — | Sprint 1 |
 | [[task:#12]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/12) | task | Draft §1 problem & difference | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | @soo-nexus | Sprint 1 |
 | [[task:#13]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/13) | task | Draft §0 Abstract | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | @jcerasuolo5 | Sprint 1 |
 | [[task:#15]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/15) | task | Sync develop with main | — | — | Sprint 1 |
-| [[task:#17]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/17) | task | Verify Wi-Fi Scanning | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | — | Sprint 2 |
-| [[task:#18]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/18) | task | Implement scanner and metadata format | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | — | Sprint 2 |
+| [[task:#17]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/17) | task | Verify Wi-Fi Scanning | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | — | Sprint 3 |
+| [[task:#18]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/18) | task | Implement scanner and metadata format | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | — | Sprint 3 |
 | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | task | Complete the cover block, §0 Abstract, and §1 Introduction | — | — | Sprint 1 |
 | [[task:#22]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/22) | task | Define goals and objectives in §2 and file matching epics and stories | — | @Perryboi8 | Sprint 1 |
 | [[task:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23) | task | Write §3 Proposed Approaches and §4 Environment, Resources, and Activities | — | — | Sprint 2 |
@@ -241,7 +260,10 @@ meeting). CI gate G8 fails if one is missing. Epics and stories go in §2.
 | [#79](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/79) | meeting | Team meeting 2026-10-20: tech stack, roles, ESP32 order list | — | @eliThomass | Sprint 2 |
 | [#80](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/80) | meeting | Team meeting 2026-10-22: diagram assignments, Sprint 2 progress, RTX presentation | — | @eliThomass | Sprint 2 |
 | [[task:#81]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/81) | task | Update §0 and §1 to name the ESP32 as the capture hardware | — | @eliThomass | Sprint 2 |
+| [[task:#82]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/82) | task | Update proposal §4 to include the ER diagram | — | @Perryboi8 | Sprint 2 |
+| [[task:#84]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/84) | task | Draw the high-level architecture diagram | — | @soo-nexus | Sprint 2 |
 | [[task:#86]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/86) | task | Propose AWS Lightsail hosting and SSH-tunnel development in §4 | [[task:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23) | @soo-nexus | Sprint 2 |
+| [[task:#91]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/91) | task | Scaffold prototype/ with the chosen stack (ESP32, FastAPI, PostgreSQL, Angular) | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | @eliThomass | Sprint 2 |
 
 ## 5. Project Outcomes
 
