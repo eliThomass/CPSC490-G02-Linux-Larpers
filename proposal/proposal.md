@@ -263,7 +263,11 @@ meeting). CI gate G8 fails if one is missing. Epics and stories go in §2.
 | [[task:#82]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/82) | task | Update proposal §4 to include the ER diagram | — | @Perryboi8 | Sprint 2 |
 | [[task:#84]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/84) | task | Draw the high-level architecture diagram | — | @soo-nexus | Sprint 2 |
 | [[task:#86]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/86) | task | Propose AWS Lightsail hosting and SSH-tunnel development in §4 | [[task:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23) | @soo-nexus | Sprint 2 |
-| [[task:#91]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/91) | task | Scaffold prototype/ with the chosen stack (ESP32, FastAPI, PostgreSQL, Angular) | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | @eliThomass | Sprint 2 |
+| [[task:#91]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/91) | task | Scaffold prototype/ with the chosen stack (not planned: split into #92–#95) | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | @eliThomass | Sprint 2 |
+| [[task:#92]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/92) | task | Scaffold the ESP32 firmware project in prototype/ | [[story:#45]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/45) | — | Sprint 2 |
+| [[task:#93]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/93) | task | Set up the PostgreSQL database for the prototype | [[story:#48]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/48) | — | Sprint 2 |
+| [[task:#94]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/94) | task | Scaffold the Angular dashboard in prototype/ | [[story:#57]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/57) | — | Sprint 2 |
+| [[task:#95]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/95) | task | Scaffold the FastAPI backend in prototype/ | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | @eliThomass | Sprint 2 |
 
 ## 5. Project Outcomes
 
