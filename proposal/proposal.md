@@ -166,6 +166,11 @@ Our group chose this tech stack at our 2026-10-20 meeting ([#79](https://github.
 - **Database (DBMS):** PostgreSQL
 - **Frontend:** Angular
 
+We also propose the following, pending sponsor approval ([#86](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/86)):
+
+- **Hosting:** one AWS Lightsail server running the FastAPI backend and the PostgreSQL database together
+- **Development access:** teammates reach the server from their own machines through SSH tunnels
+
 ### Specification and design documents
 
 No specification or design documents have been merged yet. Each one is added
@@ -236,6 +241,7 @@ meeting). CI gate G8 fails if one is missing. Epics and stories go in §2.
 | [#79](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/79) | meeting | Team meeting 2026-10-20: tech stack, roles, ESP32 order list | — | @eliThomass | Sprint 2 |
 | [#80](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/80) | meeting | Team meeting 2026-10-22: diagram assignments, Sprint 2 progress, RTX presentation | — | @eliThomass | Sprint 2 |
 | [[task:#81]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/81) | task | Update §0 and §1 to name the ESP32 as the capture hardware | — | @eliThomass | Sprint 2 |
+| [[task:#86]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/86) | task | Propose AWS Lightsail hosting and SSH-tunnel development in §4 | [[task:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23) | @soo-nexus | Sprint 2 |
 
 ## 5. Project Outcomes
 
