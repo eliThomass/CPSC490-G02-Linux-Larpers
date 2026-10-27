@@ -184,18 +184,34 @@ requests them from the backend to show the user nearby devices. [[task:#84]](htt
 a FastAPI backend and PostgreSQL on one server; the dashboard requests them
 over HTTP(S).*
 
-<!-- NOTE: The ER diagram (Ryan, #82) and the data flow diagram (Eli, #77,
-docs/design/data-flow.md) reach develop with PR #90. Add them here as
-Figures 2 and 3 after it merges, with captions and a sentence pointing at
-each, and add data-flow.md to the documents table below. The system context
-diagram (Jasmine) is still to come. -->
+Figure 2 shows the database model: six PostgreSQL entities. Each Observation
+is one captured signal from one Scanner, grouped into a ScanSession and
+matched to a DetectedDevice when possible. AnalysisResult holds the
+backend's predictions for a device over a time window: its DeviceModel,
+recording state, and estimated distance. [[task:#82]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/82)
 
-![ER_Diagram](../docs/design/NodeAnalysisERdiagram.png)
+![ER diagram: Scanner, Observation, ScanSession, DetectedDevice, DeviceModel, and AnalysisResult, with their attributes, keys, and relationships.](../docs/design/NodeAnalysisERdiagram.png)
+
+*Figure 2 — ER diagram: the six PostgreSQL entities, their attributes, and
+their relationships.*
+
+Figure 3 shows how data moves through the system. At Level 0 the system is
+one process between nearby IoT devices, the project team, and the user. At
+Level 1 the ESP32 scans Wi-Fi and Bluetooth and normalizes each capture into
+an Observation, then uploads it over Wi-Fi. The server stores it in the six
+stores from Figure 2, analyzes it, and presents the results on the
+dashboard. [[task:#77]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/77)
+
+![Level 0 and Level 1 data flow diagrams: the ESP32 scans Wi-Fi and Bluetooth and normalizes captures into Observations, uploads them over Wi-Fi, and the server ingests, stores, analyzes, and presents them on the dashboard.](../docs/design/diagrams/dfd.png)
+
+*Figure 3 — Level 0 (top) and Level 1 (bottom) data flow diagrams, in
+Gane-Sarson notation. Full description in
+[docs/design/data-flow.md](../docs/design/data-flow.md).*
+
+<!-- NOTE: The system context diagram (Jasmine) is still to come. Add it as
+the next figure, with a caption and a sentence pointing at it. -->
 
 ### Specification and design documents
-
-No specification or design documents have been merged yet. Each one is added
-to this table in the pull request that creates it.
 
 <!-- NOTE: Planned design documents, one per diagram, each with its own issue,
 as assigned at the 2026-10-22 meeting (#80): data flow diagram (Eli, #77),
@@ -213,6 +229,7 @@ numbered, captioned, and referenced from this section when it lands.
 
 | Document | Kind | Covers | Issues |
 |---|---|---|---|
+| [docs/design/data-flow.md](../docs/design/data-flow.md) | Design | Level 0 and Level 1 data flow diagrams: how signal data moves from nearby devices through the ESP32 and the server to the dashboard, with each process, data store, and the decisions behind them | [[task:#77]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/77) |
 
 ### Planned activities — the work items
 
