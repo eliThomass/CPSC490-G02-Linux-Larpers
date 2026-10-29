@@ -46,11 +46,11 @@ Date: 2026-10-11
 
 The Internet of Things (IoT) connects physical devices to computing systems, allowing them to exchange data and communicate through networks. Recording devices and network-connected cameras are commonly found in everyday environments, and their presence keeps growing, from home security cameras to Flock cameras. Devices such as Ring cameras, Meta glasses, body cameras, and spy cameras can record people without them knowing, which makes it harder for people to know where their privacy may be affected. These devices emit signals that may be observed and may provide information about their activity and location. By observing and understanding these signals, individuals can better understand how everyday IoT devices communicate and become more aware of the devices operating around them.
 
-The problem this project addresses is the difficulty of identifying and understanding nearby network-connected devices in real time. There are existing tools that can detect network devices already, but the information provided by these tools does not give the user a good understanding of what devices are present and where they are located. Our project, Distributed Signal Capture for Multi-Node Analysis, proposes a system that helps people understand where their privacy may be affected by showing them which recording and network-connected devices are around them and approximately where those devices are. In this project, each IoT device in range is treated as a node. As a user enters an area, the system captures the signals of every device within range and sends the signal metadata to a backend for analysis, such as device fingerprinting, which tells devices apart based on their observable traits. The software is meant to run on a laptop or on a smaller device such as a Raspberry Pi.
+The problem this project addresses is the difficulty of identifying and understanding nearby network-connected devices in real time. There are existing tools that can detect network devices already, but the information provided by these tools does not give the user a good understanding of what devices are present and where they are located. Our project, Distributed Signal Capture for Multi-Node Analysis, proposes a system that helps people understand where their privacy may be affected by showing them which recording and network-connected devices are around them and approximately where those devices are. In this project, each IoT device in range is treated as a node. As a user enters an area, the system captures the signals of every device within range and sends the signal metadata to a backend for analysis, such as device fingerprinting, which tells devices apart based on their observable traits. The capturing software is meant to run on an ESP32, which feeds information to a server database.
 
 This system will be able to map device presence in real time and pick out a small set of known devices: Meta glasses, Ring cameras, body cameras, and spy cameras. Although there are already tools available such as Kismet that provide network monitoring, our project will also investigate whether a device's signal metadata can show if it is actively recording nearby. The info this project provides will be shown through a user-friendly dashboard that shows detected devices and their approximate location, so the processed information is easier for the user to understand. Building this is non-trivial because it combines wireless protocol fundamentals (Wi-Fi, Bluetooth), device fingerprinting, and multi-node data analysis in one system. This will allow users to be more aware of the network-connected devices operating around them.
 
-By the end of this project, we will have software that runs on a laptop or a Raspberry Pi and meets three goals. First, it will collect Wi-Fi and Bluetooth signal metadata from devices within range. Second, backend services will analyze that metadata to fingerprint and identify a selected set of recording devices, estimate their approximate locations, and investigate whether a device is actively recording. Third, a frontend dashboard will reveal detected devices and their approximate locations in real time, in a way that is easy to understand. This semester (Fall 2026) focuses on the proposal and planning phase of the project, including a working prototype. The full implementation will come next semester in CPSC 491. In the future, this project could evolve into a more complete signal analysis platform that can detect even more types of monitoring devices.
+By the end of this project, we will have a signal capturing architecture utilizing a server and an ESP32 that meets three goals. First, it will collect Wi-Fi and Bluetooth signal metadata from devices within range. Second, backend services will analyze that metadata to fingerprint and identify a selected set of recording devices, estimate their approximate locations, and investigate whether a device is actively recording. Third, a frontend dashboard will reveal detected devices and their approximate locations in real time, in a way that is easy to understand. This semester (Fall 2026) focuses on the proposal and planning phase of the project, including a working prototype. The full implementation will come next semester in CPSC 491. In the future, this project could evolve into a more complete signal analysis platform that can detect even more types of monitoring devices.
 
 The rest of this proposal covers the background, related work, and problem statement (§1), our goals and objectives (§2), the proposed approaches (§3), the required environment, resources, and planned activities (§4), the expected outcomes and timeline (§5–§6), and our AI usage and references (§7–§8).
 
@@ -59,7 +59,7 @@ The rest of this proposal covers the background, related work, and problem state
 
   The Internet of Things (IoT) connects physical devices to computing systems through which they can exchange data. In this project, the devices of interest include network-connected cameras and wearable recording devices, such as Ring cameras, Meta glasses, and body cameras. Being able to understand the presence of such devices involves both signal capture and data analysis. This will include observing signals emitted by devices within range and interpreting those observations to be able to develop a useful picture of the surrounding environment. This project's main goal is **privacy awareness**, helping individuals map which devices are present and what their observable activity may reveal.
 
-  Our project, *Distributed Signal Capture for Multi-Node Analysis*, aims to map device presence in real time by capturing signals from devices within range as a user enters an area. Our software is intended to operate on either a laptop or a smaller computing platform, such as Raspberry Pi. Backend services will collect signal metadata from each node for analysis, including device fingerprinting to distinguish devices based on their observable traits. A frontend dashboard will present detected devices and their approximate locations, giving users a spatial view of device presence.
+  Our project, *Distributed Signal Capture for Multi-Node Analysis*, aims to map device presence in real time by capturing signals from devices within range as a user enters an area. Our signal-capturing software is intended to operate on an ESP32. Backend services will run on a computer server to collect signal metadata from each node for analysis, including device fingerprinting to distinguish devices based on their observable traits. A frontend dashboard, also running on the server, will present detected devices and their approximate locations, giving users a spatial view of device presence.
 
   Our project combines distributed signal collection, metadata analysis, and real-time visualization within a single system. We also intend to investigate whether observable metadata can indicate if a device is actively recording. We intend to have an accessible, user-friendly dashboard that translates signal metadata into understandable information about nearby devices in real time.
 
@@ -178,6 +178,8 @@ buildable. CI gate G9 fails if a document exists in `docs/specs/` or
 |---|---|---|---|
 | 〈docs/specs/account-management.md〉 | specification | 〈account management requirements〉 | 〈#n, #n〉 |
 | 〈docs/design/architecture.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
+| 〈docs/design/data-flow.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
+| 〈docs/design/system-context.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
 
 〈The scaffold ships `docs/specs/example-spec.md` and
 `docs/design/example-design.md` as worked examples — read them, then delete
@@ -204,38 +206,33 @@ traceable to the objective it serves.〉
 
 ## 5. Project Outcomes
 
-> Describe the outcomes or deliverables, e.g., final project report, user
-> manuals, source code, data or database files, etc.
->
-> Note: the deliverables always include the team GitHub repository, which
-> must already contain prototype v0 (a thin end-to-end proof-of-concept,
-> however small, running when this proposal is submitted). Briefly describe
-> what your v0 demonstrates and how to run it.
+By the end of CPSC 491, the team intends to develop a system that collects Wi-Fi and Bluetooth metadata, analyzes observations to identify selected devices, estimates their approximate locations, and presents the results through a user-friendly dashboard. The project will include the source code in the team GitHub repository, a labeled dataset of selected devices, findings determining whether Wi-Fi and Bluetooth signal metadata can indicate when a device is actively recording, and an evaluation of the dashboard's usability. The team will also provide documentation explaining how to set up and run the system, along with a final project report describing the implementation, results, limitations, and lessons learned. The system is intended to help users better understand what recording devices may be present in a nearby environment and where those devices might be located.
 
-〈**One or two paragraphs** explaining the project outcome overall — what will
-exist when the project is finished, and what it will let someone do. Keep it
-prose, not a checklist; name the deliverables inside the paragraphs, and say
-briefly what prototype v0 demonstrates today and how to run it.〉
+Prototype v0 will demonstrate the initial device-discovery functionality and provide a foundation for later development. 〈Update this sentence after Issue #16 is merged: describe the functionality that v0 actually implements, the information it returns, and the steps required to run it.〉
 
 ## 6. Project Timeline
 
-> Identifies tasks (project objectives) to be performed, milestones to be
-> met, and the estimated number of hours for each task.
-
-〈**This is the plan for CPSC 491 next semester — the implementation timeline,
-not this semester's proposal work.** Identify the tasks (your objectives from
-§2), the milestones, and the estimated hours for each, in the order they will
-be built. State the assumptions it rests on (sponsor availability, data
-access, hardware).〉
+This is the implementation plan for CPSC 491 next semester. The tasks are organized in the order they will be built, based on dependencies between the project objectives. The plan begins with data collection and storage, continues with device identification and location estimation, and then moves to dashboard development and usability evaluation. Dashboard development may begin earlier using saved test data while backend analysis continues.
 
 | Task (objective) | Milestone | Owner | Est. hours | Spring phase |
-|---|---|---|---|---|
-| 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
-| 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
+|---|---|---|---:|---|
+| 1.1 Wi-Fi discovery and metadata | A runnable backend discovers nearby Wi-Fi access points and returns their metadata. | Hardware/Backend: Eli, Ryan, Jonathan | 12 | Phase 1: Data Collection |
+| 1.2 Bluetooth discovery | Bluetooth advertisements are captured with timestamps, signal strength, and identifiers when available, verified with known test devices. | Hardware/Backend: Eli, Ryan, Jonathan | 12 | Phase 1: Data Collection |
+| 1.3 Standard observation format | Wi-Fi and Bluetooth observations share one format with capture source, protocol, timestamp, device identifiers, and signal measurement. | Backend team | 8 | Phase 1: Data Collection |
+| 1.4 Store and retrieve observations | A saved test capture can be retrieved, filtered by time range and device identifier, after the backend restarts. | Backend team | 10 | Phase 1: Data Collection |
+| 1.5 Repeated collection | New observations receive updated timestamps, and scan failures are reported without stopping collection. | Backend team | 8 | Phase 1: Data Collection |
+| 2.1 Labeled device dataset | Signal metadata is collected from the approved devices, with the device model and test conditions recorded for each capture. | Hardware/Backend: Eli, Ryan, Jonathan | 12 | Phase 2: Device Analysis |
+| 2.2 Candidate fingerprints | Characteristics that distinguish the selected devices are documented, including which stay consistent across repeated captures. | Backend team | 12 | Phase 2: Device Analysis |
+| 2.3 Device identification | The selected devices are classified, and unrecognized devices are reported as unknown. | Backend team | 16 | Phase 2: Device Analysis |
+| 2.4 Approximate location | Proximity estimates are compared against known test positions and the distance error is reported. | Backend team | 16 | Phase 2: Device Analysis |
+| 2.5 Recording-activity investigation | Findings document whether Wi-Fi and Bluetooth signal metadata can indicate when a device is actively recording, including the limitations of this approach. | Backend team | 12 | Phase 2: Device Analysis |
+| 3.1 Display observations | Displayed values match backend results for a known test dataset. | Frontend: Jasmine, Chris | 12 | Phase 3: Dashboard |
+| 3.2 Real-time updates | Each observation is displayed within two seconds of capture. | Frontend: Jasmine, Chris | 10 | Phase 3: Dashboard |
+| 3.3 Confidence and proximity display | Unknown devices, unavailable estimates, and stale observations are clearly labeled. | Frontend: Jasmine, Chris | 8 | Phase 3: Dashboard |
+| 3.4 Filtering and details | Users can filter by protocol, device classification, and last-seen time, and inspect one device's observations. | Frontend: Jasmine, Chris | 8 | Phase 3: Dashboard |
+| 3.5 Usability evaluation | Test users can identify a detected device, tell when it was last seen, and interpret the information; problems found are addressed. | Frontend: Jasmine, Chris | 10 | Phase 4: Evaluation and Finalization |
 
-〈Do **not** put this fall's four proposal sprints here — those live on the
-project board and in `docs/sprint-reviews/`. This section answers "how does
-the system actually get built next semester?"〉
+The timeline assumes that the ESP32 hardware order is approved and arrives in time for implementation, the team has access to the selected test devices needed to build the labeled dataset, and the project sponsors remain available for periodic feedback. The team also assumes access to a secure room for hardware testing. Testing will not be conducted on school Flock cameras, and private company data will not be used, in accordance with sponsor instructions. The team must also determine which minimum functionality can be demonstrated to the sponsors by their requested mid-November prototype milestone while continuing development of the full system during CPSC 491.
 
 ## 7. AI Usage
 
