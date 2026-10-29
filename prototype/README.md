@@ -1,44 +1,54 @@
 # Prototype
 
-Proof-of-concept code for 〈project title〉. **Prototype v0 is due Sep 27** with
-the proposal, and it grows every sprint; the Week-8 in-class check demos from
-this folder.
+Proof-of-concept code for Distributed Signal Capture for Multi-Node Analysis.
 
-This example implements the login slice behind story
-[#3](../../../issues/3) and task [#5](../../../issues/5) — deliberately tiny,
-because a prototype exists to answer one risky question, not to be the
-product. **Replace it with yours** and keep the shape: a small module, a test
-per acceptance criterion, and run instructions below that work on a machine
-that has never seen your project.
-
-## How to run
-
-```bash
-cd prototype
-python login.py                 # smoke run: prints a truncated session token
-```
-
-## How to test
-
-```bash
-cd prototype
-pip install pytest              # once
-python -m pytest tests -q       # 4 tests
-```
-
-CI runs exactly these tests on every pull request (job **Prototype build &
-tests**). If you use Node instead of Python, put a `package.json` here with a
-`test` script and CI will detect and run that instead.
-
-## What it proves
-
-That credentials can be checked and a session token issued, with unknown-user
-and wrong-password failures indistinguishable to the caller — the riskiest
-assumption in 〈the epic this belongs to〉.
-
-## Status
-
-| Sprint | Increment |
+| Folder | Component |
 |---|---|
-| v0 (Sep 27) | login check + 4 tests (this example) |
-| Sprint 1 | 〈what you added〉 |
+| `backend/` | FastAPI backend |
+
+## Backend (FastAPI)
+
+Requires Python 3.12 or newer.
+
+### Setup
+
+With uv:
+
+```bash
+cd prototype/backend
+uv sync
+```
+
+With pip:
+
+```bash
+cd prototype/backend
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### Run
+
+```bash
+uv run fastapi dev main.py       # uv
+fastapi dev main.py              # pip (with .venv active)
+```
+
+Then open <http://127.0.0.1:8000/health>. It should return `{"status":"ok"}`.
+
+### Test
+
+```bash
+uv run pytest                    # uv
+pip install pytest && pytest     # pip (with .venv active)
+```
+
+### Add a dependency
+
+Use uv, then regenerate `requirements.txt` so pip users get it too:
+
+```bash
+uv add <package>
+uv export --format requirements-txt --no-hashes --no-dev --no-emit-project -o requirements.txt
+```
