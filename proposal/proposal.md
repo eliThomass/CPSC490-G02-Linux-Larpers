@@ -208,8 +208,17 @@ dashboard. [[task:#77]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/
 Gane-Sarson notation. Full description in
 [docs/design/data-flow.md](../docs/design/data-flow.md).*
 
-<!-- NOTE: The system context diagram (Jasmine) is still to come. Add it as
-the next figure, with a caption and a sentence pointing at it. -->
+Figure 4 shows where the system stops. The project team builds one Signal
+Capture & Analysis System. Nearby IoT devices send it Wi-Fi frames and BLE
+advertisements, the project team sends it known device models and session
+labels, and the user sends filter and inspect requests and receives the
+dashboard view. [[task:#97]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/97)
+
+![System context diagram: nearby IoT and recording devices, the project team, and the user exchange data with the Signal Capture and Analysis System inside the project team's system boundary.](../docs/design/diagrams/system-context.png)
+
+*Figure 4 — System context: what the system exchanges with everything
+outside it. Full description in
+[docs/design/system-context.md](../docs/design/system-context.md).*
 
 ### Specification and design documents
 
@@ -230,6 +239,7 @@ numbered, captioned, and referenced from this section when it lands.
 | Document | Kind | Covers | Issues |
 |---|---|---|---|
 | [docs/design/data-flow.md](../docs/design/data-flow.md) | Design | Level 0 and Level 1 data flow diagrams: how signal data moves from nearby devices through the ESP32 and the server to the dashboard, with each process, data store, and the decisions behind them | [[task:#77]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/77) |
+| [docs/design/system-context.md](../docs/design/system-context.md) | Design | System context diagram: where the system's boundary is, and what crosses it to and from nearby devices, the project team, and the user | [[task:#97]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/97) |
 
 ### Planned activities — the work items
 
@@ -285,8 +295,10 @@ meeting). CI gate G8 fails if one is missing. Epics and stories go in §2.
 | [[task:#91]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/91) | task | Scaffold prototype/ with the chosen stack (not planned: split into #92–#95) | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | @eliThomass | Sprint 2 |
 | [[task:#92]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/92) | task | Scaffold the ESP32 firmware project in prototype/ | [[story:#45]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/45) | — | Sprint 2 |
 | [[task:#93]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/93) | task | Set up the PostgreSQL database for the prototype | [[story:#48]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/48) | — | Sprint 2 |
-| [[task:#94]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/94) | task | Scaffold the Angular dashboard in prototype/ | [[story:#57]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/57) | — | Sprint 2 |
+| [[task:#94]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/94) | task | Scaffold the Angular dashboard in prototype/ | [[story:#57]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/57) | @chroyy, @jcerasuolo5 | Sprint 2 |
 | [[task:#95]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/95) | task | Scaffold the FastAPI backend in prototype/ | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | @eliThomass | Sprint 2 |
+| [[task:#97]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/97) | task | Draw the system context diagram | — | @jcerasuolo5 | Sprint 3 |
+| [[task:#102]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/102) | task | Remove AWS Lightsail references from the design docs and diagrams | — | — | Sprint 3 |
 
 ## 5. Project Outcomes
 
