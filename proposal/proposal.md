@@ -120,24 +120,24 @@ Several problems are solved with our project with each of its goals:
 
 ## 3. Proposed Approaches
 
-<!-- NOTE (delete this note when §3 is done): The list below still needs
-explaining. For each approach, say what we will do, which alternatives we
-considered (for example, building on Kismet [4], which §1 discusses), and why
-we chose ours. Write it as an argument, not a manual: a reader should finish
-§3 knowing what we will do and why that instead of the alternatives.
-- Clear and concise: a few paragraphs, or a short list of strategies with one
-  line of trade-off each. If it runs past a page, it belongs in §4.
-- Keep details out: tooling, platforms, frameworks, DBMS, environment setup,
-  diagrams, and the work breakdown all go in §4. If a sentence names a version,
-  a library, or a configuration, move it to §4 and leave a pointer here
-  ("the implementation stack is detailed in §4"). -->
+> Describe your proposed approach to solve the problem, specifying how you
+> will achieve the stated goals. List some possible strategies.
 
-- Capture Wi-Fi and Bluetooth signal metadata from devices in range (Goal 1).
-- Convert every capture into one common observation format and store it in a central backend (Objectives 1.3, 1.4).
-- Fingerprint the selected recording devices using a labeled dataset we collect ourselves (Objectives 2.1–2.3).
-- Estimate device proximity from signal strength and check it against known test positions (Objective 2.4).
-- Compare captures of the same devices while recording and not recording to test whether recording activity is detectable (Objective 2.5).
-- Show detected devices on a dashboard that updates in real time (Goal 3).
+〈Your approach — **clear and concise**. State the strategy you chose, the
+alternatives you considered, and the reasoning that decided between them.
+Think of this as the argument, not the manual: a reader should finish this
+section understanding *what* you will do and *why that* rather than the
+alternatives.〉
+
+**Keep the details out of this section.** Tooling, platforms, frameworks,
+DBMS choices, environment setup, diagrams, and the work breakdown all belong
+in §4 (Required Environment, Resources, and Planned Activities). If a
+sentence here names a version number, a library, or a configuration, it
+probably belongs in §4 — leave a pointer instead ("the implementation stack
+is detailed in §4").
+
+〈A few paragraphs, or a short list of candidate strategies with one line of
+trade-off each. If it runs past a page, you are writing §4.〉
 
 ## 4. Required Environment, Resources, and Planned Activities
 
@@ -269,7 +269,7 @@ meeting). CI gate G8 fails if one is missing. Epics and stories go in §2.
 | [[task:#18]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/18) | task | Implement scanner and metadata format | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | — | Sprint 3 |
 | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | task | Complete the cover block, §0 Abstract, and §1 Introduction | — | — | Sprint 1 |
 | [[task:#22]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/22) | task | Define goals and objectives in §2 and file matching epics and stories | — | @Perryboi8 | Sprint 1 |
-| [[task:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23) | task | Write §3 Proposed Approaches and §4 Environment, Resources, and Activities | — | — | Sprint 2 |
+| [[task:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23) | task | Write §3 and §4 (not planned: split into #104 and #105) | — | @Perryboi8 | Sprint 2 |
 | [[task:#24]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/24) | task | Write §5 Project Outcomes and §6 Project Timeline | — | @jcerasuolo5 | Sprint 2 |
 | [[task:#25]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/25) | task | Finalize §7 AI Usage and §8 References and submit | — | — | Sprint 3 |
 | [[task:#36]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/36) | task | Draft §1.1 Related Work | [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) | — | Sprint 1 |
@@ -299,6 +299,8 @@ meeting). CI gate G8 fails if one is missing. Epics and stories go in §2.
 | [[task:#95]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/95) | task | Scaffold the FastAPI backend in prototype/ | [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) | @eliThomass | Sprint 2 |
 | [[task:#97]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/97) | task | Draw the system context diagram | — | @jcerasuolo5 | Sprint 3 |
 | [[task:#102]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/102) | task | Remove AWS Lightsail references from the design docs and diagrams | — | — | Sprint 3 |
+| [[task:#104]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/104) | task | Write §3 Proposed Approaches | — | — | Sprint 3 |
+| [[task:#105]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/105) | task | Write §4 Required Environment, Resources, and Planned Activities | — | — | Sprint 3 |
 
 ## 5. Project Outcomes
 
