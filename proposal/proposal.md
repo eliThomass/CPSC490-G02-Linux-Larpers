@@ -120,24 +120,21 @@ Several problems are solved with our project with each of its goals:
 
 ## 3. Proposed Approaches
 
-> Describe your proposed approach to solve the problem, specifying how you
-> will achieve the stated goals. List some possible strategies.
+Our approach is to build a single pipeline which every goal shares and focuses towards. This pipeline is as follows: small capture nodes record signal metadata, a central backend then stores and analyzes the metadata, and a dashboard can then be used to explain the results to a non-technical user. Each strategy below lists the alternatives that we considered and why we ended up choosing ours. The implementation stack and environment details are found in §4.
 
-〈Your approach — **clear and concise**. State the strategy you chose, the
-alternatives you considered, and the reasoning that decided between them.
-Think of this as the argument, not the manual: a reader should finish this
-section understanding *what* you will do and *why that* rather than the
-alternatives.〉
+**Capture passively using ESP32 nodes.** Each capture node for this project is an ESP32 which listens for Wi-Fi and Bluetooth signals from other devices in its range. This process is passive, so the user doesn't have to do anything. We did consider scanning from a laptop using a built-in Wi-Fi adapter; however, this only covers Wi-Fi and also ties capturing to one computer. Additionally, we considered using Kismet [4] as the capture layer, but it's built for security professionals and network admins, so we decided to instead only take inspiration from it. A dedicated ESP32 can cover both Wi-Fi and Bluetooth and can stay in a room, and more nodes can be added later without changing the rest of the system. SnoopDog [6] needs the user to move around through active trials, but we want detection to work simply when someone walks into a room. [[epic:#47]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/47) [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) [[story:#45]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/45) [[story:#49]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/49)
 
-**Keep the details out of this section.** Tooling, platforms, frameworks,
-DBMS choices, environment setup, diagrams, and the work breakdown all belong
-in §4 (Required Environment, Resources, and Planned Activities). If a
-sentence here names a version number, a library, or a configuration, it
-probably belongs in §4 — leave a pointer instead ("the implementation stack
-is detailed in §4").
+**Normalize data on the node, then upload it over Wi-Fi.** The node converts all captures into a common observation format before uploading them over Wi-Fi to a backend for storage. We considered two alternatives: sending raw captures over a USB cable to a computer, and normalizing the raw captures on the server instead of the node. Uploading over Wi-Fi keeps the node untethered and lets several nodes report to one backend. Normalizing on the node means the backend and dashboard only ever receive one format, so both Wi-Fi and Bluetooth captures are handled the same way. Since devices often randomize their MAC addresses [5], an observed address is treated as evidence of the device existing, but not as its permanent device identity. [[story:#46]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/46) [[story:#48]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/48)
 
-〈A few paragraphs, or a short list of candidate strategies with one line of
-trade-off each. If it runs past a page, you are writing §4.〉
+**Fingerprint a small set of selected devices from our own labeled data.** Instead of trying to identify every possible device, we focus on Meta glasses, Ring cameras, body cameras, and spy cameras. We can then build a labeled dataset by capturing these devices ourselves under test conditions. We rejected manufacturer lookup by MAC address, which randomization defeats [5], and also against a general-purpose classifier like Lumos's [2], which can only identify devices that are similar to its training data. A more narrow scope gives us a claim that we can test and measure with more accuracy. When an observation doesn't match any of the selected devices, the backend can then report "unknown" rather than its closest guess. This keeps our focus set on recording devices. [[epic:#50]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/50) [[story:#51]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/51) [[story:#52]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/52) [[story:#53]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/53)
+
+**Estimate device proximity from signal strength.** We can estimate how close a device is to the ESP32 capture node based on its received signal strength and report the error against measured test positions. Kismet [4] records where a device was last seen using GPS rather than how close it currently is. Lumos [2] and SnoopDog [6] locate devices by having the user walk around the room, which isn't passive. Signal strength is already part of every observation, so getting proximity needs no extra effort from the user. [[story:#54]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/54)
+
+**Treat recording detection as an investigation.** We will compare the captures of the same device while it's recording and while it's idle under the same conditions. This way we can then report whether the differences are large enough to show whether it is recording. SnoopDog [6] detects recording by correlating the user's movement with a device's traffic, which once again requires active user trials. Whether this method of passive detection can work is an open question, so a negative result backed by our captures is an acceptable outcome. [[story:#55]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/55)
+
+**Real-time, easy-to-read results.** The dashboard shows which devices are nearby, how confident the identification is, how close they are, and when they were last seen. The dashboard also labels unknown devices and stale or unavailable estimates. We rejected using a raw log or packet view like Kismet's [4] because we assume our users are non-technical rather than network administrators (§1). Our goal is for every observation to appear on the dashboard within two seconds of capture. This way the dashboard gives an accurate representation of the room. [[epic:#56]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/56) [[story:#57]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/57) [[story:#58]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/58) [[story:#59]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/59)
+
+**Build the essential data pipeline first.** Every later goal will consume stored observation data, so this semester's prototype focuses on the capture, normalization, and storage aspects first. Identification, proximity, and recording detection will follow in CPSC 491. The dashboard can be started against saved test captures (§6). [[epic:#47]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/47)
 
 ## 4. Required Environment, Resources, and Planned Activities
 
@@ -178,6 +175,8 @@ buildable. CI gate G9 fails if a document exists in `docs/specs/` or
 |---|---|---|---|
 | 〈docs/specs/account-management.md〉 | specification | 〈account management requirements〉 | 〈#n, #n〉 |
 | 〈docs/design/architecture.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
+| 〈docs/design/data-flow.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
+| 〈docs/design/system-context.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
 
 〈The scaffold ships `docs/specs/example-spec.md` and
 `docs/design/example-design.md` as worked examples — read them, then delete
