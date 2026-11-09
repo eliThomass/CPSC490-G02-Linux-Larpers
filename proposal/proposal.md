@@ -138,68 +138,120 @@ Our approach is to build a single pipeline which every goal shares and focuses t
 
 ## 4. Required Environment, Resources, and Planned Activities
 
-> Review the required and available resources and environment to complete
-> your project. For example, server, platform, software tools, operating
-> systems, DBMS, or any required skills.
->
-> Describe the expected activities to achieve the stated goals, e.g.,
-> software development process.
+### Environment and resources
 
-〈Your environment, resources, and planned activities.〉
+We decided on a technology stack that best suits both our environment and the skill set of our team. The stack we chose is recorded at the 2026-10-20 meeting ([#79](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/79)): an ESP32 for capturing, a Python FastAPI backend, a PostgreSQL database, and an Angular dashboard. Figure 1 below shows how the pieces connect to one another. This section gives the reason we decided on each choice, the alternatives the choices replaced, and the resources the project depends on.
 
-**Diagrams belong in this section.** Include at minimum a high-level
-architecture diagram and a system (context) diagram; add the ER/EER model and
-a data-flow diagram where they help the reader understand what you are
-building and what it depends on. Draw them with any graphical tool
-(Lucidchart, draw.io, Miro, Mermaid, ERDPlus, Figma), keep the authoritative
-copies in `docs/design/` with both editable source and exported image, and
-reference them here.
+**Capture hardware: ESP32 using C++.** Each capture node for this project is an ESP32 microcontroller. The ESP32 has both a Wi-Fi radio and a Bluetooth Low Energy radio on one board, so a single node can capture both protocols that Goal 1 needs. Its Wi-Fi radio can also run in promiscuous mode to receive frames that are not addressed to it. A node is much smaller than a laptop, which lets it stay in a room and lets us add more nodes later without changing the rest of the system. The alternative was a laptop's built-in Wi-Fi adapter, which covers only Wi-Fi and ties captures to a single computer (§3). The firmware is written in C++, which both the Arduino core and Espressif's ESP-IDF support. The order list, which includes two ESP32 boards and one ESP32 kit, was prepared in a shared sheet and sent to our advisors ([#72](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/72), [#79](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/79)). The
+Goal 1 capture work waits on that hardware. [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) [[story:#45]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/45) [[task:#92]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/92)
 
-〈Number every figure, caption it, and point at it from the prose — "Figure 1
-shows the three deployment tiers and the trust boundary between them." A
-figure the text never mentions is decoration. See `docs/design/DIAGRAMS.md`
-for tools, conventions, and the rule that every box and arrow must be
-verified against reality.〉
+**Backend: Python with FastAPI.** The backend will receive observations made from the capture nodes, store them, and then serve the information to the dashboard. For this, we chose Python because the Goal 2 analysis (fingerprinting, proximity estimation, and recording activity) is data analysis, which Python is very well suited for. This also keeps the API and the analysis in one language, decreasing the complexity of the tech stack. On top of that, our team members were most familiar with Python, which made it an easy choice for our backend. Within Python, FastAPI will be used to validate every request against a declared data model, which enforces the common observation format defined in Objective 1.3 at the point where the data enters the system. It will also generate interactive documentation from the API code for better viewability. A lighter framework such as Flask would leave this validation to us, and a full framework such as Django also brings an admin site and templating which a JSON API doesn't need. Dependencies are managed with uv, which records exact versions in a lockfile. A `requirements.txt` can also be generated and exported with uv, which allows others with just pip installed to get the required dependencies. Tests are written in pytest and run in continuous integration on every pull request. [[task:#95]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/95) [[story:#46]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/46) [[feature:#107]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/107) 
 
-![ER_Diagram](../docs/design/NodeAnalysisERdiagram.png)
+**Database: PostgreSQL accessed through SQLAlchemy.** The data model in Figure 2 is relational, in which every Observation belongs to a Scanner and a ScanSession, and AnalysisResult refers to devices, sessions, and models through foreign keys. We will use PostgreSQL to enforce these relationships, and it also has the column types which the model uses: `uuid` keys, `timestamptz` timestamps for the time-range queries outlined in Objective 1.4, and `jsonb` for protocol-specific metadata that differs from Wi-Fi to Bluetooth. An alternative to PostgreSQL was SQLite, which is lighter, but has no dedicated JSON or time-zone-aware timestamp column type and allows only one writer at a time, which would make working with several nodes at once more complicated. The backend defines the tables for PostgreSQL with SQLAlchemy and validates incoming data with separate Pydantic models. For development, each teammate runs PostgreSQL 17 in a Docker container using a single Docker Compose command. This ensures the setup is the same on every system. The container listens on port 5433 (not 5432, so it does not clash with another PostgreSQL instance) and its data is kept in a volume so it survives restarts. Finally, we can store the connection settings in a `.env` file which is built from `prototype/.env.example` by filling in the placeholder values [[story:#48]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/48) [[feature:#110]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/110) [[task:#93]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/93).
+
+**Frontend: Angular.** The dashboard is an Angular application, which will allow for the viewing of the information from the capture nodes. Our sponsors are familiar with Angular [#70](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/70), so our group is planning to lean on them for any needed support for the code aspect. The dashboard must be updated within two seconds of a capture (Objective 3.2). Whether updates reach the browser through polling or a push connection is still undecided. [[story:#57]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/57) [[story:#58]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/58) [[task:#94]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/94)
+
+**Hosting: free / self-hosted.** Originally, our group was aiming to use AWS Lightsail [[task:#86]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/86) to run our service and send our capture data to. However, our sponsors said that we shouldn't be relying on AWS or any similar paid service, so we now plan instead to use a free service or run the server ourselves. References to Lightsail have been removed from the design documents and diagrams [[task:#102]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/102). Until a server is chosen for hosting, every component runs on a developer's laptop: the database in Docker as mentioned previously, the backend with FastAPI's built-in development server, and the ESP32 nodes on the same Wi-Fi network.
+
+**Development process and tooling.** The work for this project is tracked as GitHub issues. Each goal in §2 is an epic, each objective is a user story, and each story is broken into features and tasks with one owner each. Work towards these goals and objectives happens in four two-week sprints which are tracked on a project board. The repository also follows the Gitflow workflow: every change is made on a separate feature branch pertaining to an issue, merged into `develop` through a pull request that a teammate other than the author reviews and approves, and released to `main` from `develop`. Continuous integration also runs on every pull request and checks the repository structure, builds and tests the prototype, and verifies that the pull request links its issue and discloses any AI use.
+
+**Required skills.** The project requires knowledge of embedded C++ for the ESP32 firmware; working knowledge of Wi-Fi (IEEE 802.11) and Bluetooth Low Energy protocols for the capture and fingerprinting of data; Python, FastAPI, and PostgreSQL for the backend; TypeScript and Angular for the dashboard; and Docker and Git for the shared environment. Team roles are assigned to follow these skills and match people to the skills they perform best in: Eli Thomas, Ryan Perry, and Jonathan Soo are assigned to hardware and backend, and Jasmine Cerasuolo and Chris Huynh to frontend and backend. There is an intentional overlap in the roles, which gives every member a fair chance to contribute and learn from every aspect of this project.
+
+**Test devices, space, and constraints.** Building the labeled dataset (Objective 2.1) requires access to the selected recording devices, which are provided by the advisors and RTX: Meta glasses, Ring cameras, body cameras, and spy cameras. Hardware testing will be performed in a secure room [[task:#67]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/67). Following our sponsors' instructions, we will not test against Flock cameras on campus and will not analyze private company data ([#70](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/70)). [[story:#51]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/51) Teammates also develop on a range of operating systems: Eli uses macOS Tahoe, ... (add other OS' here).
+
+### Diagrams
+
+Figure 1 shows the high-level architecture: the ESP32 capture node passively
+captures Wi-Fi and Bluetooth signals and sends observations to the FastAPI
+backend, which stores them in PostgreSQL on one server, and the dashboard
+requests them from the backend to show the user nearby devices. [[task:#84]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/84)
+
+![High-level architecture: ESP32 capture nodes send observations to a FastAPI backend and PostgreSQL on one server; the dashboard requests them over HTTP(S).](../docs/design/diagrams/architecture.drawio.png)
+
+*Figure 1 — High-level architecture: ESP32 capture nodes send observations to
+a FastAPI backend and PostgreSQL on one server; the dashboard requests them
+over HTTP(S).*
+
+Figure 2 shows the database model: six PostgreSQL entities. Each Observation
+is one captured signal from one Scanner, grouped into a ScanSession and
+matched to a DetectedDevice when possible. AnalysisResult holds the
+backend's predictions for a device over a time window: its DeviceModel,
+recording state, and estimated distance. [[task:#82]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/82)
+
+![ER diagram: Scanner, Observation, ScanSession, DetectedDevice, DeviceModel, and AnalysisResult, with their attributes, keys, and relationships.](../docs/design/NodeAnalysisERdiagram.png)
+
+*Figure 2 — ER diagram: the six PostgreSQL entities, their attributes, and
+their relationships.*
+
+Figure 3 shows how data moves through the system. At Level 0 the system is
+one process between nearby IoT devices, the project team, and the user. At
+Level 1 the ESP32 scans Wi-Fi and Bluetooth and normalizes each capture into
+an Observation, then uploads it over Wi-Fi. The server stores it in the six
+stores from Figure 2, analyzes it, and presents the results on the
+dashboard. [[task:#77]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/77)
+
+![Level 0 and Level 1 data flow diagrams: the ESP32 scans Wi-Fi and Bluetooth and normalizes captures into Observations, uploads them over Wi-Fi, and the server ingests, stores, analyzes, and presents them on the dashboard.](../docs/design/diagrams/dfd.png)
+
+*Figure 3 — Level 0 (top) and Level 1 (bottom) data flow diagrams, in
+Gane-Sarson notation. Full description in
+[docs/design/data-flow.md](../docs/design/data-flow.md).*
+
+Figure 4 shows where the system stops. The project team builds one Signal
+Capture & Analysis System. Nearby IoT devices send it Wi-Fi frames and BLE
+advertisements, the project team sends it known device models and session
+labels, and the user sends filter and inspect requests and receives the
+dashboard view. [[task:#97]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/97)
+
+![System context diagram: nearby IoT and recording devices, the project team, and the user exchange data with the Signal Capture and Analysis System inside the project team's system boundary.](../docs/design/diagrams/system-context.png)
+
+*Figure 4 — System context: what the system exchanges with everything
+outside it. Full description in
+[docs/design/system-context.md](../docs/design/system-context.md).*
 
 ### Specification and design documents
 
-**Every specification and design document the team writes is listed here**
-with the objective it serves. This section is the index of the project's
-technical detail: §3 holds the argument, §4 holds the documents that make it
-buildable. CI gate G9 fails if a document exists in `docs/specs/` or
-`docs/design/` that this section does not link.
+<!-- NOTE: Planned design documents, one per diagram, each with its own issue,
+as assigned at the 2026-10-22 meeting (#80): data flow diagram (Eli, #77),
+system context diagram (Jasmine), ER diagram (Ryan), high-level architecture
+diagram (Jonathan). Each diagram's figure is
+numbered, captioned, and referenced from this section when it lands.
+- Every specification and design document goes in this table: path, kind
+  (specification or design), what it covers, and its issues. CI gate G9 fails
+  if a document in docs/specs/ or docs/design/ is not listed here.
+- Each document's first line names its epic and stories
+  ("> Epic: #N · Stories: #N, #N", gate G2), so the trail runs both ways.
+- docs/specs/example-spec.md and docs/design/example-design.md are the
+  scaffold's worked examples. Read them, then delete them once we have our
+  own. -->
 
 | Document | Kind | Covers | Issues |
 |---|---|---|---|
-| 〈docs/specs/account-management.md〉 | specification | 〈account management requirements〉 | 〈#n, #n〉 |
-| 〈docs/design/architecture.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
-| 〈docs/design/data-flow.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
-| 〈docs/design/system-context.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
-
-〈The scaffold ships `docs/specs/example-spec.md` and
-`docs/design/example-design.md` as worked examples — read them, then delete
-them once you have your own, and list yours here.〉
-
-〈Replace these rows with your own. Each document names its epic and stories
-in its own first lines too (gate G2), so the trail runs both ways.〉
+| [docs/design/data-flow.md](../docs/design/data-flow.md) | Design | Level 0 and Level 1 data flow diagrams: how signal data moves from nearby devices through the ESP32 and the server to the dashboard, with each process, data store, and the decisions behind them | [[task:#77]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/77) |
+| [docs/design/system-context.md](../docs/design/system-context.md) | Design | System context diagram: where the system's boundary is, and what crosses it to and from nearby devices, the project team, and the user | [[task:#97]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/97) |
 
 ### Planned activities — the work items
 
-The goals and objectives live in §2 as epics and user stories. **This section
-links every *other* work item: features, enhancements, bugs, tasks, and
-sub-tasks** — the concrete activities that deliver those objectives. CI gate
-G8 fails if such an issue exists that this section does not link.
+The work items listed below are every feature and task that the team has filed outside of the epics and user stories listed in §2, grouped by the part of the project that each one serves. Each paragraph in this section describes the work of the item, the parts of the item that are finished or are still open, and lists the relevant issue references at the end. The owner and sprint of each item are kept on the issue itself and on the project board.
 
-| Issue | Type | Activity | Parent | Owner | Sprint |
-|---|---|---|---|---|---|
-| 〈#n〉 | 〈task〉 | 〈stand up the prototype login endpoint〉 | 〈#story〉 | 〈owner〉 | 〈Sprint 1〉 |
-| 〈#n〉 | 〈feature/enhancement/bug/task/sub-task〉 | 〈…〉 | 〈#story〉 | 〈…〉 | 〈…〉 |
+**Proposal writing, Sprint 1.** The first sprint produced the front of this proposal. A single parent task covered the cover block, the abstract, and the introduction. Under this parent task, we drafted the introduction background (Ryan Perry), the problem and how our project differs (Jonathan Soo), the abstract (Jasmine Cerasuolo), and the problem statements in §1.2 (Chris Huynh). Other tasks were used to fill in the cover fields, draft the related work section in §1.1 (Eli Thomas), cite the claims in §1 with their references in §8, and proofread §0 and §1 for submission. A second parent task, led by Ryan, defined the goals and objectives in §2 which allowed us to file the relevant epics and stories for them. Alongside this, we updated the repository README and the proposal's sources; two early tasks, one to create the epics and stories and one to sync `develop` with `main`, were closed as not planned. [[task:#21]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/21) [[task:#10]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/10) [[task:#11]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/11) [[task:#12]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/12) [[task:#13]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/13) [[task:#36]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/36) [[task:#37]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/37) [[task:#38]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/38) [[task:#39]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/39) [[task:#22]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/22) [[task:#40]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/40) [[task:#41]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/41) [[task:#6]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/6) [[task:#8]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/8) [[task:#9]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/9) [[task:#15]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/15) 
 
-〈Replace these rows with your own, and keep the table current as you file new
-issues — with §2 it gives a reader every planned activity in one place, each
-traceable to the objective it serves.〉
+**Proposal writing, Sprints 2 and 3.** After feedback from our sponsors, we removed the content about retrieving data from Flock cameras and also updated §0 and §1 to name the ESP32 as the capture hardware. Jasmine wrote §5 Project Outcomes and §6 Project Timeline. The task for §3 and §4 was closed as not planned and split in two, so that each section could be finished and merged on its own: §3 Proposed Approaches is complete, and this section, §4, is the second half. A sub-task of §4 adds each teammate's development operating system to the environment above. Finalizing §7 AI Usage and §8 References and submitting the proposal is still open. [[task:#68]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/68) [[task:#81]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/81) [[task:#24]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/24) [[task:#23]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/23) [[task:#104]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/104) [[task:#105]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/105) [[task:#117]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/117) [[task:#25]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/25)
+
+**Diagrams and design documents.** Each of the four figures for this section was given its own task. The figures were assigned at the 2026-10-22 team meeting, and the work is as follows: Eli Thomas drew the Level 0 and Level 1 data flow diagrams (Figure 3), Ryan Perry added the ER diagram to this section (Figure 2), Jonathan Soo drew the high-level architecture diagram (Figure 1), and Jasmine Cerasuolo drew the system context diagram (Figure 4). The data flow and system context diagrams also each have a design document in `docs/design/`, listed in the table above. Jonathan also proposed hosting the backend on AWS Lightsail; however, our sponsors rejected this idea in favor of a free service, and Jasmine Cerasuolo removed the Lightsail references from the design documents and diagrams. A follow-up task (Jonathan Soo) updates the architecture diagram and design documents to show a self-hosted server and adds a design document for the architecture. The remaining specification and design documents, one specification per epic and design documents that cover the six parts the course requires, are planned for Sprint 4 and will each be listed in the table above. [[task:#77]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/77) [[task:#82]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/82) [[task:#84]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/84) [[task:#97]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/97) [[task:#86]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/86) [[task:#102]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/102) [[task:#118]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/118) [[task:#119]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/119) [#80](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/80)
+
+**Team organization and resources.** Our sponsor and team meetings are recorded on GitHub as issues, which allows for easier tracking and organization. The 2026-10-15 sponsor meeting gave proposal feedback, the Flock camera constraint, and the sponsors' familiarity with Angular; a Discord call on 2026-10-18 prepared the ESP32 order list; the 2026-10-20 team meeting chose the technology stack and roles; the 2026-10-22 meeting assigned the diagrams; and the 2026-10-27 sponsor meeting set the real-time expectation for the demo and raised the hosting cost (for Lightsail, which we are no longer using). From these, the team decided individual roles and recorded them in the README, removed a leftover `README.old.md`, and updated the repository to the Gitflow workflow provided by the instructor. Securing a dedicated room to hold the sponsored test devices, which all members and our advisors can access, is still open. If no on-campus room is available, a team member can provide a room for testing. [[task:#69]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/69) [[task:#73]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/73) [[task:#75]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/75) [[task:#67]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/67) [#70](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/70) [#72](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/72) [#79](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/79) [#80](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/80) [#101](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/101)
+
+**Prototype skeleton, Sprint 2.** The task to scaffold `prototype/` with the chosen stack was split into one task per component, so that each could be built and reviewed on its own. The FastAPI backend is scaffolded: it starts with one command, answers a `/health` check, and its tests run in continuous integration on every pull request. The Angular dashboard scaffold (Chris Huynh and Jasmine Cerasuolo) and the ESP32 firmware scaffold are still open; the firmware waits on the hardware order. The PostgreSQL database moved to Sprint 3, below. [[task:#91]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/91) [[task:#95]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/95) [[task:#94]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/94) [[task:#92]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/92)
+
+**Prototype slice, Sprint 3: the observation pipeline.** The Sprint 3 demonstration is the slice the rest of the design depends on most: an observation that can be validated, stored, and retrieved. It covers two Goal 1 objectives and is owned by Eli Thomas. The first feature defines the common observation schema for Wi-Fi and Bluetooth from Objective 1.3: one task defines the Observation model, and another tests it with complete records and with records that are missing optional fields, for each protocol. The second feature sets up the PostgreSQL database described in the environment above; its database task adds the Docker Compose service, the `.env.example` settings, and a `/health/db` check that confirms the backend can reach the database, and is complete. The third feature is the observations API from Objective 1.4, with one task for each acceptance criterion: storing an observation through the API, retrieving observations by time range and by device identifier, and verifying that a saved observation survives a backend restart. Each criterion is checked by a test, or for the restart, by a test or a documented check that a teammate can repeat. [[story:#46]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/46) [[feature:#107]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/107) [[task:#108]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/108) [[task:#109]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/109) [[story:#48]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/48) [[feature:#110]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/110) [[task:#93]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/93) [[feature:#111]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/111) [[task:#112]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/112) [[task:#113]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/113) [[task:#114]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/114)
+
+**Wi-Fi capture, waiting on hardware.** Objective 1.1 has two tasks of its own: verifying that Wi-Fi scanning works, and implementing the scanner and its metadata format. Both wait on the ESP32 order and are not yet assigned. [[story:#16]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/16) [[task:#17]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/17) [[task:#18]](https://github.com/eliThomass/CPSC490-G02-Linux-Larpers/issues/18)
+
+<!-- NOTE: When someone files a new issue that is not an epic or user story
+(feature, enhancement, bug, task, or sub-task), add its typed link, e.g.
+[[task:#N]](issue URL), to the end of the paragraph above that describes its
+work, in the same PR. CI gate G8 fails if an open one is missing. Meetings use
+plain #N link text because the Word export has no meeting type. -->
 
 ## 5. Project Outcomes
 
