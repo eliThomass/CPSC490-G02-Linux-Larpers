@@ -58,7 +58,9 @@ fastapi dev main.py              # pip (with .venv active)
 
 Then open <http://127.0.0.1:8000/health>. It should return `{"status":"ok"}`.
 
-With the database running, open <http://127.0.0.1:8000/health/db>. It should return `{"database":"ok"}`.
+With the database running, open <http://127.0.0.1:8000/health/db>. It should return `{"database":"ok"}`. The backend creates its tables on first connect.
+
+To try the API, open <http://127.0.0.1:8000/docs>. `POST /observations` stores one observation; its `scanner_id` and `session_id` must already exist in the `scanners` and `scan_sessions` tables.
 
 ### Test
 
