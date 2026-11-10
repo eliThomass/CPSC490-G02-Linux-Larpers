@@ -7,6 +7,12 @@ from pydantic import AwareDatetime, BaseModel, Field
 # Will check all incoming observations for validity and reject any that are invalid.
 # This is to prevent bad data from being stored in the database.
 class ObservationCreate(BaseModel):
+    """Common Wifi/Bluetooth input with explicit units and missing-field behavior
+
+    Nullable fields may be null or omitted; metadata defaults to an empty object.
+    The backend generates observation_id and received_at when storing the record.
+    """
+
     scanner_id: UUID = Field(description="ID of the scanner that captured the signal.")
     session_id: UUID = Field(description="ID of the collection or testing period.")
     device_id: UUID | None = Field(
