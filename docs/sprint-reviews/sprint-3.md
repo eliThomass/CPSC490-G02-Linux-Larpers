@@ -169,5 +169,7 @@ has a second PR in review (#126).
 - The reviewer merges, not the author.
 - Move the `sp:` labels on #92 and #118 to their user stories.
 - Assign owners to #16, #45, #46, #49, and #52–#55.
-- Once the carried-over stories are in Sprint 4, re-estimate every Sprint 4
-  story from `sp: 1` to `sp: 5`, keeping `sp: 5` for very large stories.
+- Moved the carried-over stories to Sprint 4 and re-estimated all 13 Sprint 4
+  stories from `sp: 1` to `sp: 5`, keeping 4 and 5 for the largest: four at
+  1, four at 2, two at 3, two at 4 (#16, #55), and one at 5 (#53), for 31
+  points. This is still far above the 1 point completed in Sprint 3.
