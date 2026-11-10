@@ -7,7 +7,7 @@ Proof-of-concept code for Distributed Signal Capture for Multi-Node Analysis.
 | `backend/` | FastAPI backend |
 | `database/` | PostgreSQL database |
 | `dashboard/` | Angular dashboard |
-| `esp32/` | ESP32 capture-node firmware (C/C++, PlatformIO + Arduino) |
+| `esp32/` | ESP32 capture-node firmware |
 
 ## Database (PostgreSQL)
 
