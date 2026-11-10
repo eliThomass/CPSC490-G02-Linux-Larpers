@@ -7,6 +7,7 @@ Proof-of-concept code for Distributed Signal Capture for Multi-Node Analysis.
 | `backend/` | FastAPI backend |
 | `database/` | PostgreSQL database |
 | `dashboard/` | Angular dashboard |
+| `esp32/` | ESP32 capture-node firmware (C/C++, PlatformIO + Arduino) |
 
 ## Database (PostgreSQL)
 
@@ -108,3 +109,35 @@ Then open <http://localhost:4200>. It should show the Angular starter page.
 ng build
 ng test --watch=false
 ```
+
+## ESP32 firmware (PlatformIO)
+
+Requires [PlatformIO Core](https://docs.platformio.org/en/latest/core/installation/index.html):
+
+```bash
+brew install platformio              # macOS
+python3 -m pip install platformio    # any OS
+```
+
+`platformio.ini` targets the generic `esp32dev` board. Change `board` once the team confirms which ESP32 was ordered.
+
+### Build
+
+```bash
+cd prototype/esp32
+pio run
+```
+
+The first build downloads the ESP32 toolchain. It should end with `SUCCESS`.
+
+### Flash and monitor
+
+Needs an ESP32 board connected over USB (waiting for the hardware order, #79):
+
+```bash
+cd prototype/esp32
+pio run --target upload
+pio device monitor -b 115200
+```
+
+The monitor should print `ESP32 capture node: skeleton`.
