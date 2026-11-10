@@ -6,6 +6,7 @@ Proof-of-concept code for Distributed Signal Capture for Multi-Node Analysis.
 |---|---|
 | `backend/` | FastAPI backend |
 | `database/` | PostgreSQL database |
+| `dashboard/` | Angular dashboard |
 
 ## Database (PostgreSQL)
 
@@ -76,4 +77,34 @@ Use uv, then regenerate `requirements.txt` so pip users get it too:
 ```bash
 uv add <package>
 uv export --format requirements-txt --no-hashes --no-dev --no-emit-project -o requirements.txt
+```
+
+## Dashboard (Angular)
+
+Requires [Node.js](https://nodejs.org/) 22.22.3+, 24.15.0+, or 26+ (24 LTS recommended) and the Angular CLI:
+
+```bash
+npm install -g @angular/cli
+```
+
+### Setup
+
+```bash
+cd prototype/dashboard
+npm install
+```
+
+### Run
+
+```bash
+ng serve
+```
+
+Then open <http://localhost:4200>. It should show the Angular starter page.
+
+### Build and test
+
+```bash
+ng build
+ng test --watch=false
 ```
