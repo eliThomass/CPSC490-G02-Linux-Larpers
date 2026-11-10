@@ -119,3 +119,48 @@ def test_unknown_device_is_rejected_and_not_stored(client, session, ids):
     assert response.status_code == 422
     assert "Unknown device_id" in response.json()["detail"]
     assert stored(session) == []
+
+
+def add_observation(session, ids, captured_at, device_id=None):
+    row = Observation(
+        scanner_id=uuid.UUID(ids["scanner_id"]),
+        session_id=uuid.UUID(ids["session_id"]),
+        device_id=device_id,
+        captured_at=captured_at,
+        protocol="wifi",
+    )
+    session.add(row)
+    session.commit()
+    return row
+
+
+def test_time_range_returns_only_observations_inside_it(client, session, ids):
+    add_observation(session, ids, datetime(2026, 11, 9, 10, tzinfo=UTC))
+    inside = add_observation(session, ids, datetime(2026, 11, 9, 12, tzinfo=UTC))
+    add_observation(session, ids, datetime(2026, 11, 9, 14, tzinfo=UTC))
+    response = client.get("/observations", params={
+        "start": "2026-11-09T11:00:00Z",
+        "end": "2026-11-09T13:00:00Z",
+    })
+    assert response.status_code == 200
+    assert [o["observation_id"] for o in response.json()] == [str(inside.observation_id)]
+
+
+def test_device_filter_returns_only_that_devices_observations(client, session, ids):
+    device = DetectedDevice(display_name="device a")
+    other = DetectedDevice(display_name="device b")
+    session.add_all([device, other])
+    session.commit()
+    mine = add_observation(session, ids, datetime(2026, 11, 9, 12, tzinfo=UTC), device.device_id)
+    add_observation(session, ids, datetime(2026, 11, 9, 12, tzinfo=UTC), other.device_id)
+    add_observation(session, ids, datetime(2026, 11, 9, 12, tzinfo=UTC))
+    response = client.get("/observations", params={"device_id": str(device.device_id)})
+    assert response.status_code == 200
+    assert [o["observation_id"] for o in response.json()] == [str(mine.observation_id)]
+
+
+def test_device_filter_with_no_matches_returns_empty_list(client, session, ids):
+    add_observation(session, ids, datetime(2026, 11, 9, 12, tzinfo=UTC))
+    response = client.get("/observations", params={"device_id": str(uuid.uuid4())})
+    assert response.status_code == 200
+    assert response.json() == []
