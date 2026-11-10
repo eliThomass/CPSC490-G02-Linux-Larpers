@@ -5,9 +5,9 @@ from sqlalchemy import JSON, DateTime, ForeignKey
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-
-# Models with fields built from the ER diagram. 
+# Models with fields built from the ER diagram.
 # These models are used to create the database tables and to interact with the database.
+
 
 class Base(DeclarativeBase):
     type_annotation_map = {
@@ -45,12 +45,27 @@ class DetectedDevice(Base):
 
 
 class Observation(Base):
+    """Captured Facts from one scanner
+
+    Scanner, scan session, capture time and protocol are required. The backend
+    generates the observation ID and receipt time when inserting the row.
+    Nullable fields represent unavailable information; metadata defaults to {}.
+    RSSI is measured in dBm, while signal_percent is a separate 0-100 value.
+    Neither signal measurement is calculated from the other.
+    """
+
     __tablename__ = "observations"
 
-    observation_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    observation_id: Mapped[uuid.UUID] = mapped_column(
+        primary_key=True, default=uuid.uuid4
+    )
     scanner_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("scanners.scanner_id"))
-    session_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("scan_sessions.session_id"))
-    device_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("detected_devices.device_id"))
+    session_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("scan_sessions.session_id")
+    )
+    device_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("detected_devices.device_id")
+    )
     captured_at: Mapped[datetime]
     received_at: Mapped[datetime] = mapped_column(default=lambda: datetime.now(UTC))
     protocol: Mapped[str]
