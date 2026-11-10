@@ -1,10 +1,13 @@
+from uuid import UUID
+
 from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy import text
+from pydantic import AwareDatetime
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
 from db import get_engine, get_session
 from models import DetectedDevice, Observation, ScanSession, Scanner
-from schemas import ObservationCreate
+from schemas import ObservationCreate, ObservationRead
 
 app = FastAPI()
 
@@ -37,3 +40,19 @@ def create_observation(observation: ObservationCreate, session: Session = Depend
     session.add(row)
     session.commit()
     return {"observation_id": row.observation_id, "received_at": row.received_at}
+
+@app.get("/observations", response_model=list[ObservationRead])
+def list_observations(
+    start: AwareDatetime | None = None,
+    end: AwareDatetime | None = None,
+    device_id: UUID | None = None,
+    session: Session = Depends(get_session),
+):
+    query = select(Observation).order_by(Observation.captured_at)
+    if start:
+        query = query.where(Observation.captured_at >= start)
+    if end:
+        query = query.where(Observation.captured_at <= end)
+    if device_id:
+        query = query.where(Observation.device_id == device_id)
+    return session.scalars(query).all()
