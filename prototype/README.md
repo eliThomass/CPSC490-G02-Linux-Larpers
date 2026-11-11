@@ -6,6 +6,7 @@ Proof-of-concept code for Distributed Signal Capture for Multi-Node Analysis.
 |---|---|
 | `backend/` | FastAPI backend |
 | `database/` | Compose file for PostgreSQL and backend tests |
+| `dashboard/` | Angular Dashboard |
 
 Unless stated otherwise, run commands from the repository root: the
 `CPSC490-G02-Linux-Larpers` folder containing `prototype/`. Commands below use a
@@ -98,7 +99,6 @@ To try the API, open <http://127.0.0.1:8000/docs>. `POST /observations` stores o
 
 ### Test
 
-The suite currently has **19 test cases**:
 
 | File | Coverage | Cases |
 |---|---|---|
