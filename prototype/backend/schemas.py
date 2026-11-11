@@ -21,10 +21,13 @@ class ObservationCreate(BaseModel):
         description="Tracked device ID, if already associated with this capture.",
     )
     captured_at: AwareDatetime = Field(
-        description="Address observed in the capture; (Not permanent device id)"
+        description="Time the scanner captured the signal."
     )
     protocol: Literal["wifi", "bluetooth"]
-    observed_address: str | None = None
+    observed_address: str | None = Field(
+        default=None,
+        description="Address observed in the capture; (Not permanent device id)",
+    )
     address_type: str | None = Field(
         default=None, description="Type of observed address, if available (ex, bssid)"
     )
