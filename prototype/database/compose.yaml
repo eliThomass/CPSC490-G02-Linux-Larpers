@@ -1,11 +1,22 @@
+# Keep the database project name consistent regardless of the working directory.
+name: database
+
 services:
   db:
     image: postgres:17
-    env_file: ../.env
+    env_file:
+      - path: ../.env
+        required: false
     ports:
       - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  tests:
+    profiles: [test]
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.test
 
 volumes:
   pgdata:
