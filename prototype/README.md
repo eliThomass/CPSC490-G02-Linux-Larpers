@@ -94,6 +94,34 @@ With the database running, open <http://127.0.0.1:8000/health/db>. It should ret
 
 To try the API, open <http://127.0.0.1:8000/docs>. `POST /observations` stores one observation; its `scanner_id` and `session_id` must already exist in the `scanners` and `scan_sessions` tables. `GET /observations` returns stored observations, optionally filtered by `start` and `end` (time zone required, e.g. `2026-11-09T12:00:00Z`) and `device_id`.
 
+### Check that data survives a restart
+
+With the database and backend running:
+
+1. Connect the backend to the database once so it creates the tables. This should return `{"database":"ok"}`:
+
+   ```bash
+   curl http://127.0.0.1:8000/health/db
+   ```
+
+2. Add a scanner and a scan session:
+
+   ```bash
+   cd prototype/database
+   docker compose exec db psql -U signal -d signal_capture -c "INSERT INTO scanners (scanner_id, name, hardware_model, firmware_version) VALUES ('11111111-1111-1111-1111-111111111111', 'node-1', 'ESP32', '0.1.0') ON CONFLICT DO NOTHING; INSERT INTO scan_sessions (session_id, name, started_at) VALUES ('22222222-2222-2222-2222-222222222222', 'restart-check', now()) ON CONFLICT DO NOTHING;"
+   ```
+
+3. Store an observation and note its `observation_id`:
+
+   ```bash
+   curl -X POST http://127.0.0.1:8000/observations -H "Content-Type: application/json" -d '{"scanner_id": "11111111-1111-1111-1111-111111111111", "session_id": "22222222-2222-2222-2222-222222222222", "captured_at": "2026-11-09T12:00:00Z", "protocol": "wifi"}'
+   ```
+
+4. Stop the backend with Ctrl+C and start it again.
+5. Run `curl http://127.0.0.1:8000/observations`. The list should include the same `observation_id`.
+
+On Windows, steps 3 and 5 can be done from <http://127.0.0.1:8000/docs> instead.
+
 ### Test
 
 
