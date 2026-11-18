@@ -112,6 +112,10 @@ protobuf==7.36.2
     # via
     #   googleapis-common-protos
     #   opentelemetry-proto
+psycopg==3.3.8
+    # via backend
+psycopg-binary==3.3.8 ; implementation_name != 'pypy'
+    # via psycopg
 pydantic==2.14.1
     # via
     #   fastapi
@@ -128,6 +132,7 @@ pygments==2.21.0
     # via rich
 python-dotenv==1.2.4
     # via
+    #   backend
     #   pydantic-settings
     #   uvicorn
 python-multipart==0.0.32
@@ -152,6 +157,8 @@ sentry-sdk==2.73.0
     # via fastapi-cloud-cli
 shellingham==1.5.4
     # via typer
+sqlalchemy==2.1.8
+    # via backend
 starlette==1.10.0
     # via fastapi
 truststore==0.10.5 ; sys_platform != 'emscripten'
@@ -171,11 +178,13 @@ typing-extensions==4.16.0
     #   opentelemetry-exporter-otlp-proto-http
     #   opentelemetry-sdk
     #   opentelemetry-semantic-conventions
+    #   psycopg
     #   pydantic
     #   pydantic-core
     #   pydantic-extra-types
     #   pydantic-settings
     #   rich-toolkit
+    #   sqlalchemy
     #   starlette
     #   typing-inspection
 typing-inspection==0.4.4
@@ -183,6 +192,8 @@ typing-inspection==0.4.4
     #   fastapi
     #   pydantic
     #   pydantic-settings
+tzdata==2026.6 ; sys_platform == 'win32'
+    # via psycopg
 urllib3==2.8.0
     # via
     #   requests
