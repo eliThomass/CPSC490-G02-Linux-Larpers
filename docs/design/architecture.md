@@ -1,7 +1,7 @@
 # Design — High-level architecture
 
 > Epic: #47, #50, #56 · Stories: #16, #48, #57
-> Task: #84 · Owner: Jonathan Soo · Sprint: 2 · Status: draft
+> Task: #84, #118 · Owner: Jonathan Soo · Sprint: 2 · Status: draft
 
 This document answers one question: what are the major pieces of the
 system, and how do they connect? The data model is in the ER diagram
@@ -18,8 +18,9 @@ requests observations from the API and shows nearby devices to the
 user](diagrams/architecture.drawio.png)
 
 *Figure 1 — High-level architecture. The dashed outline is everything the
-team builds; the solid box is the proposed server. Labels in brackets give
-the technology, and TBD marks what is not decided yet. Editable source:
+team builds; the solid box is the self-hosted server. Labels in brackets give
+the technology, and TBD marks what is not decided yet; the dashboard has
+since been decided as Angular (§2). Editable source:
 [`diagrams/architecture.drawio.svg`](diagrams/architecture.drawio.svg).*
 
 ## 2. Components
@@ -30,7 +31,7 @@ the technology, and TBD marks what is not decided yet. Editable source:
 | ESP32 capture node (×N) | Scans Wi-Fi and Bluetooth and sends observations to the backend | C/C++ firmware on ESP32 | decided (#79) |
 | Backend API | Ingests, stores and serves observations | FastAPI | decided (#79) |
 | Database | Holds observations and devices | PostgreSQL | decided (#79) |
-| Dashboard | Shows nearby devices to the user | framework TBD (Angular suggested) | open (#79) |
+| Dashboard | Shows nearby devices to the user | Angular | decided (#70, #94) |
 | User | A person entering the space | — | external |
 
 ## 3. Connections
@@ -46,13 +47,14 @@ the technology, and TBD marks what is not decided yet. Editable source:
 ## 4. Deployment
 
 The Backend API and the Database run together on one server, so the API
-reaches PostgreSQL directly. The proposed host is **AWS Lightsail**, pending
-sponsor approval; proposal §4 carries the suggestion. During development,
-teammates reach the server from their own machines through **SSH tunnels**.
+reaches PostgreSQL directly. The server is **self-hosted**: AWS Lightsail
+was dropped because the sponsors asked for a free option (#102). Until the
+machine is chosen, every component runs on a developer's laptop, with the
+database in Docker and the ESP32 nodes on the same Wi-Fi network
+(proposal §4).
 
 ## 5. What is NOT designed yet
 
 - The protocol between the capture nodes and the API.
 - How observations from several nodes are correlated with each other.
-- The dashboard framework.
-- The final host, until the sponsors approve one.
+- Which machine hosts the server, and how teammates reach it.
