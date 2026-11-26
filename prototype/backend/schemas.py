@@ -83,3 +83,14 @@ class ObservationRead(BaseModel):
         validation_alias="metadata_",
         description="Additional capture metadata, empty obj if unavailable",
     )
+
+
+class ScannerCreate(BaseModel):
+    name: str = Field(min_length=1)
+    hardware_model: str = Field(min_length=1)
+    firmware_version: str = Field(min_length=1)
+
+
+class ScanSessionCreate(BaseModel):
+    name: str = Field(min_length=1)
+    test_conditions: str | None = None

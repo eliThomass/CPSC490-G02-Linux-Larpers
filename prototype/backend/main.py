@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from uuid import UUID
 
 from fastapi import Depends, FastAPI, HTTPException
@@ -7,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from db import get_engine, get_session
 from models import DetectedDevice, Observation, ScanSession, Scanner
-from schemas import ObservationCreate, ObservationRead
+from schemas import ObservationCreate, ObservationRead, ScanSessionCreate, ScannerCreate
 
 app = FastAPI()
 
@@ -56,3 +57,31 @@ def list_observations(
     if device_id:
         query = query.where(Observation.device_id == device_id)
     return session.scalars(query).all()
+
+
+@app.post("/scanners", status_code=201)
+def create_scanner(scanner: ScannerCreate, session: Session = Depends(get_session)):
+    row = Scanner(**scanner.model_dump())
+    session.add(row)
+    session.commit()
+    return {"scanner_id": row.scanner_id}
+
+
+@app.post("/sessions", status_code=201)
+def start_session(scan_session: ScanSessionCreate, session: Session = Depends(get_session)):
+    row = ScanSession(**scan_session.model_dump(), started_at=datetime.now(UTC))
+    session.add(row)
+    session.commit()
+    return {"session_id": row.session_id, "started_at": row.started_at}
+
+
+@app.post("/sessions/{session_id}/end")
+def end_session(session_id: UUID, session: Session = Depends(get_session)):
+    row = session.get(ScanSession, session_id)
+    if row is None:
+        raise HTTPException(404, f"Unknown session_id: {session_id}")
+    if row.ended_at is not None:
+        raise HTTPException(409, f"Session already ended: {session_id}")
+    row.ended_at = datetime.now(UTC)
+    session.commit()
+    return {"session_id": row.session_id, "ended_at": row.ended_at}
