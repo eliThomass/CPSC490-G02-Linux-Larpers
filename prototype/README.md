@@ -223,11 +223,26 @@ npm install
 
 ### Run
 
+The dashboard reads its data from the backend, so start the database and the
+backend first (sections above). Then, from `prototype/dashboard`:
+
 ```bash
 ng serve
 ```
 
-Then open <http://localhost:4200>. It should show the Angular starter page.
+Open <http://localhost:4200>. The **Nearby devices** page lists each detected
+device with its identification, protocol, signal strength, and last-seen time
+(UTC), using each device's most recent observation. With no observations stored
+yet, it says "No devices detected yet."
+
+`ng serve` forwards requests for `/observations` to the backend at
+`http://127.0.0.1:8000` (see `proxy.conf.json`), so the backend needs no extra
+configuration. If the backend is not running, the page says it could not load
+devices.
+
+Device names are not shown yet: `GET /observations` returns only a device ID, so
+each device appears as "Unknown device" with the last four characters of its ID.
+The device list endpoint from #139 will provide names.
 
 ### Build and test
 
