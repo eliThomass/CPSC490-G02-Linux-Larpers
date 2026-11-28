@@ -1,0 +1,34 @@
+@switch (state()) {
+  @case ('loading') {
+    <p class="status">Loading detected devices…</p>
+  }
+  @case ('error') {
+    <p class="status error">Could not load devices. Check that the backend is running.</p>
+  }
+  @case ('loaded') {
+    @if (devices().length === 0) {
+      <p class="status empty">No devices detected yet.</p>
+    } @else {
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Device</th>
+            <th scope="col">Protocol</th>
+            <th scope="col">Signal strength</th>
+            <th scope="col">Last seen (UTC)</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (device of devices(); track device.deviceId) {
+            <tr>
+              <td>{{ identification(device) }}</td>
+              <td>{{ protocolLabel(device.protocol) }}</td>
+              <td>{{ signalStrength(device) }}</td>
+              <td>{{ device.lastSeen | date: 'yyyy-MM-dd HH:mm:ss' : 'UTC' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  }
+}
