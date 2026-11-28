@@ -1,0 +1,23 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+th {
+  background: #f4f4f4;
+}
+
+.status {
+  padding: 1rem 0;
+}
+
+.error {
+  color: #b00020;
+}
